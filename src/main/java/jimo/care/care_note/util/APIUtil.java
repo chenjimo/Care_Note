@@ -9,6 +9,9 @@ import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+/***
+ * QQEmail、Phone、GetWeather接口处理工具类
+ */
 @Component
 public class APIUtil {
 

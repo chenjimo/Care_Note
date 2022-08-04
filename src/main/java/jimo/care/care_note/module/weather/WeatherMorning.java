@@ -1,5 +1,7 @@
-package jimo.care.care_note.weather;
-
+package jimo.care.care_note.module.weather;
+/***
+ * 早安消息天气关怀模板
+ */
 public class WeatherMorning {
     private static String weatherJSON;
     private static String status;

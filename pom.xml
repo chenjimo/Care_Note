@@ -49,12 +49,20 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.4.2</version>
         </dependency>
-
         <dependency>
+            <!--分页工具-->
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
             <version>5.2.0</version>
         </dependency>
+        <dependency>
+            <!--Mapper&Bean自动生成器-->
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.3.1.tmp</version>
+        </dependency>
+
+
         <dependency>
             <!--Send Email-->
             <groupId>org.springframework.boot</groupId>

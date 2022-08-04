@@ -2,6 +2,9 @@ package jimo.care.care_note.pojo;
 
 import lombok.Data;
 
+/***
+ * 重要天气数据Bean
+ */
 @Data
 public class WeatherDay {
     private String weather;

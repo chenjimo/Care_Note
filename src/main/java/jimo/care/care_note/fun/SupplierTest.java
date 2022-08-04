@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.function.Supplier;
 
+/***
+ * 定时消息业务处理类
+ * 无参无返类型
+ */
 @Component("supplierTest")
 public class SupplierTest implements Supplier<String> {
     @Resource

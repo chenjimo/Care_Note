@@ -7,6 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.function.Supplier;
 
+/***
+ * 定时消息类
+ */
 @Component
 public class TimeSchedule {
     @Autowired

@@ -3,6 +3,9 @@ package jimo.care.care_note.util;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/***
+ * 字符限制工具
+ */
 @Component
 public class LimitUtil {
     @Value("${jimo.api-util.stringLimit}")
