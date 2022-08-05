@@ -1,7 +1,7 @@
 package jimo.care.care_note.util;
 
-import jimo.care.care_note.pojo.WeatherDay;
-import jimo.care.care_note.pojo.WeatherIndex;
+import jimo.care.care_note.info.weather.WeatherDay;
+import jimo.care.care_note.info.weather.WeatherIndex;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Component;

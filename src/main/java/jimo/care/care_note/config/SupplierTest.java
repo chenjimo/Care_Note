@@ -1,4 +1,4 @@
-package jimo.care.care_note.fun;
+package jimo.care.care_note.config;
 
 import jimo.care.care_note.util.APIUtil;
 import org.springframework.stereotype.Component;

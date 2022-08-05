@@ -50,16 +50,22 @@
             <version>3.4.2</version>
         </dependency>
         <dependency>
-            <!--分页工具-->
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>5.2.0</version>
-        </dependency>
-        <dependency>
             <!--Mapper&Bean自动生成器-->
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.3.1.tmp</version>
+            <version>3.4.1</version>
+        </dependency>
+        <!-- freemarker模板引擎 mybatis-plus代码生成器需要 -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.31</version>
+        </dependency>
+        <dependency>
+            <!--分页工具-->
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.1.11</version>
         </dependency>
 
 

@@ -1,7 +1,6 @@
 package jimo.care.care_note.util;
 
-import jimo.care.care_note.pojo.WeatherDay;
-import jimo.care.care_note.pojo.WeatherIndex;
+import jimo.care.care_note.info.weather.WeatherIndex;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

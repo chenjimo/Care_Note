@@ -1,4 +1,4 @@
-package jimo.care.care_note.pojo;
+package jimo.care.care_note.info.weather;
 
 import lombok.Data;
 

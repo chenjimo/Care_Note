@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableScheduling //定时器注解
+@MapperScan("jimo.care.care_note.mapper")
 public class CareNoteApplication {
 
     public static void main(String[] args) {
