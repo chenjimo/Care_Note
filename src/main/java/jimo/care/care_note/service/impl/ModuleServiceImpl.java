@@ -27,7 +27,7 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, Module> impleme
     @Override
     public boolean insert(Module module) {
         module.setName(module.getName()==null?"JIMO关怀！":module.getName());
-        module.setUse(module.getUse()==null?0:module.getUse());
+        module.setUId(module.getUId()==null?0:module.getUId());
         module.setMorning(module.getMorning()==null?"早安！":module.getMorning());
         module.setNoon(module.getNoon()==null?"午安！":module.getNoon());
         module.setEvening(module.getEvening()==null?"晚安！":module.getEvening());
@@ -59,7 +59,7 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, Module> impleme
      */
     @Override
     public boolean UserUpdateModule(Module module) {
-        return baseMapper.update(module,Wrappers.<Module>update(new Module(module.getId(),module.getUse())))>0;
+        return baseMapper.update(module,Wrappers.<Module>update(new Module(module.getId(),module.getUId())))>0;
     }
 
     /***
@@ -81,9 +81,10 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, Module> impleme
     public Page UserGetModules(Page<Module> page, Integer uID) {
         return baseMapper.selectPage(page,
                 Wrappers.<Module>lambdaUpdate()
-                        .eq(Module::getUse,uID)
-                        .or()
-                        .eq(Module::getUse,0));
+                        .eq(Module::getUId,uID)
+                        .or().eq(Module::getUId,0)
+                        .or().eq(Module::getUId,-1)
+                        .or().eq(Module::getUId,-2));
     }
 
     /***

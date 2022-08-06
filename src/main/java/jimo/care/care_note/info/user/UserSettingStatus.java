@@ -7,7 +7,8 @@ package jimo.care.care_note.info.user;
  * 3=1+2服务、5=1+4服务、6=2+4服务、7=1+2+4服务。
  */
 public class UserSettingStatus {
-    public static final Integer DELETE = 0;
+    public static final Integer DELETE=-1;
+    public static final Integer STOP= 0;
     public static final Integer MORNING = 1;
     public static final Integer NOON = 2;
     public static final Integer EVENING = 4;

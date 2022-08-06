@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jimo.care.care_note.bean.Log;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * <p>
@@ -47,8 +50,8 @@ public interface ILogService extends IService<Log> {
     Page<Log> UserGetLog(Page<Log> page,Integer uID);
 
     /***
-     * @param type 周报查询成功与否数、
+     * @param queryWrapper 周报查询成功与否数、等相关信息
      * @return Integer
      */
-    Integer getCount(Integer type);
+    List<Map<String,Object>> getCountMaps(QueryWrapper queryWrapper);
 }

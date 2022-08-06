@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jimo.care.care_note.util.DateUtil;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -34,8 +35,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public boolean insert(User user) {
         user.setName(user.getName()==null?"小鬼记得起名字吆！": user.getName());
         user.setPower(user.getPower()==null?UserPower.USER:user.getPower());
-        user.setBz(user.getBz()==null? "创建时间："+DateUtil.dateToString(new Date()):user.getBz());
+        user.setBz(user.getBz()==null?"初来乍到的小鬼":user.getBz());
+        user.setCreateTime(user.getCreateTime()==null? LocalDateTime.now():user.getCreateTime());
         user.setMoney(user.getMoney()==null?0:user.getMoney());
+        user.setSex(user.getSex()==null?1:user.getSex());
         return baseMapper.insert(user)>0;
     }
 
@@ -71,21 +74,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     /***
-     * @param page
      * @param email ByEmail
      * @return 4>权限ID|name|phone|money|email|power
      */
     @Override
-    public Page<User> UserGetUsers(Page<User> page, String email) {
-        return baseMapper.selectPage(page, Wrappers.<User>lambdaQuery().eq(User::getEmail,"email")
-                .select(User::getId,User::getName,User::getPhone,User::getMoney,User::getEmail,User::getPower));
+    public User UserGetUser( String email) {
+        return baseMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getEmail,email)
+                .select(User::getId,User::getName,User::getPwd,User::getPhone,User::getMoney,User::getEmail,User::getPower,User::getSex));
     }
 
     /***
      * @return 己注册用户总数
      */
     @Override
-    public Integer getCount() {
-        return baseMapper.selectCount(null);
+    public Integer getCount(QueryWrapper queryWrapper) {
+        return baseMapper.selectCount(queryWrapper);
     }
 }

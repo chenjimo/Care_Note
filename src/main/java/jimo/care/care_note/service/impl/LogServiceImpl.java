@@ -10,9 +10,12 @@ import jimo.care.care_note.bean.User;
 import jimo.care.care_note.info.LogCountType;
 import jimo.care.care_note.mapper.LogMapper;
 import jimo.care.care_note.service.ILogService;
+import jimo.care.care_note.util.DateUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -42,7 +45,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
      */
     @Override
     public boolean deleteByLID(Integer lId) {
-        return baseMapper.updateById(new Log(lId, "delete" + LocalDateTime.now())) > 0;
+        return baseMapper.updateById(new Log(lId, "delete" + DateUtil.localDateTimeToString(LocalDateTime.now()))) > 0;
     }
 
     /***
@@ -66,26 +69,12 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
      * 2：享受服务的用户数，3：成功享受服务的用户数；
      * 4：被关怀的对象数，5：成功被关怀的用户数；
      * 6：使用的模板数，7：成功使用的模板数；
-     * @param type 周报查询成功与否数、
+     * @param queryWrapper 周报查询成功与否数、
      * @return Integer
      */
     @Override
-    public Integer getCount(Integer type) {
-        LambdaQueryWrapper<Log> logQuery = Wrappers.<Log>lambdaQuery();
-        switch (type) {
-            case 0: logQuery = null;
-            break;
-            case 2: logQuery.select(Log::getUId);
-            break;
-            case 4:logQuery.select(Log::getSId);
-            break;
-            case 6:logQuery.select(Log::getMId);
-            break;
-        }
-        if (type==1||type==3||type==5||type==7){
-            logQuery.eq(Log::getStatus,"true");
-        }
-        return baseMapper.selectCount(logQuery);
+    public List<Map<String,Object>> getCountMaps(QueryWrapper queryWrapper) {
+        return baseMapper.selectMaps(queryWrapper);
     }
 
 

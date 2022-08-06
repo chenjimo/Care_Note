@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    #数据库用户名、密码，数据库名称(CareNote)按需求应要改写
+    username: care_note
+    password: care_note
+    url: jdbc:mysql://ubuntu:3306/care_note?serverTimezone=UTC&useUncide=true&characterEncoding=utf-8&useSSL=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  #   关闭thymeleaf缓存
+  thymeleaf:
+    cache: false
+
+  #    i18n
+  messages:
+    basename: i18n.login
+    encoding: utf-8
+
+  mail:
+    #根据163、qq等邮箱，更改为 smtp.163.com / smtp.qq.com
+    host: XXX.qq.com
+    #邮箱账号(需更改)
+    username: jimoworld@qq.com
+    password: XXXXXX #smtp开启时的邮箱密码(需更改)
+    port: 465
+    protocol: smtp
+    default-encoding: UTF-8
+    properties:
+      mail.smtp.ssl.enable: true
+      mail.smtp.socketFactory.port: 465
+      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+
+server:
+  port: 9277
+mybatis-plus:
+  mapper-locations: "classpath:mapper/*.xml"
+  type-aliases-package: jimo.care.car_note.pojo
+  configuration:
+    map-underscore-to-camel-case: true #开启驼峰命名
+jimo:
+  api-util:
+    weatherURL: "https://XXXXXX.cn/hw/weather?city=" #你的天气请求API地址
+    sendURL: "https://XXXXX.cn/hw/hwSms?phoneNumber=" #你的消息发送API地址
+    stringLimit: 20 #字符长度限制
+    webhookURL: XXXXXX #你的钉钉机器人POST地址
+    webhookKey: XXXXX #你的钉钉机器人Key

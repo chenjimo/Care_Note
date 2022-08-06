@@ -32,16 +32,18 @@ public class SettingServiceImpl extends ServiceImpl<SettingMapper, Setting> impl
         setting.setLocal(setting.getLocal()==null?"上海":setting.getLocal());
         setting.setPhone(setting.getPhone()==null?"17761612832":setting.getPhone());
         setting.setStatus(setting.getStatus()==null? UserSettingStatus.ALL:setting.getStatus());
+        setting.setSex(setting.getSex()==null?0:setting.getSex());
+        setting.setLaw(setting.getLaw()==null?"EVERY_DAY":setting.getLaw());
         return baseMapper.insert(setting)>0;
     }
 
     /***
-     * @param sID （BySID真删除）
+     * @param sID （BySID假删除）
      * @return 删
      */
     @Override
     public boolean deleteBySID(Integer sID) {
-        return baseMapper.deleteById(sID)>0;
+        return baseMapper.updateById(new Setting(sID,UserSettingStatus.DELETE))>0;
     }
 
     /***

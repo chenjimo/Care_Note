@@ -47,14 +47,13 @@ public interface IUserService extends IService<User> {
     Page<User> AdminGetUsers(Page<User> page, QueryWrapper queryWrapper);
 
     /***
-     * @param page
      * @param email ByEmail
      * @return 4>权限ID|name|phone|money|email|power
      */
-    Page<User> UserGetUsers(Page<User> page, String email);
+    User UserGetUser(String email);
 
     /***
      * @return 己注册用户总数
      */
-    Integer getCount();
+    Integer getCount(QueryWrapper queryWrapper);
 }

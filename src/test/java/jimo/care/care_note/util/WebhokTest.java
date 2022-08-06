@@ -15,6 +15,9 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Date;
 
+/***
+ * 测试钉钉的接口调试！！！
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class WebhokTest {

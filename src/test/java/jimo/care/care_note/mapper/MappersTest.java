@@ -11,10 +11,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+/***
+ * 已经全部测试成功封闭起来
+ */
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 class MappersTest {
-    @Resource
+  /*  @Resource
     UserMapper userMapper;
     @Resource
     SettingMapper settingMapper;
@@ -24,6 +27,8 @@ class MappersTest {
     ModuleMapper moduleMapper;
     @Resource
     LogMapper logMapper;
+    @Resource
+    PageMapper pageMapper;*/
 
     /***
      * 切记莫再扩展功能可以先实现再完善，莫着急权当复习Java框架！！！！
@@ -34,7 +39,7 @@ class MappersTest {
      * 5.前端
      * 6.事物回滚&过滤器
      */
-    @Test
+    /*@Test
     void userTest() {
         System.out.println(userMapper.selectById(null)==null?null:1);
         Page<User> page = new Page<>(1,5);
@@ -80,4 +85,11 @@ class MappersTest {
      //   System.out.println(delete);
 
     }
+    @Test
+    void PageTest(){
+        jimo.care.care_note.bean.Page page = new jimo.care.care_note.bean.Page();
+        page.setName("JIMO");
+        int insert = pageMapper.insert(page);
+        System.out.println(insert+":"+page);
+    }*/
 }
