@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -17,7 +18,8 @@ import lombok.Data;
  * @since 2022-08-04
  */
 @Data
-public class Module implements Serializable {
+@TableName("module")
+public class CareModule implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
@@ -35,10 +37,10 @@ public class Module implements Serializable {
 
     private Integer uId;
 
-    public Module() {
+    public CareModule() {
     }
 
-    public Module(Integer id, Integer uId) {
+    public CareModule(Integer id, Integer uId) {
         this.id = id;
         this.uId = uId;
     }

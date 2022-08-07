@@ -62,7 +62,7 @@ public class RelationServiceImpl extends ServiceImpl<RelationMapper, Relation> i
      * @return ALL，一般是关联其他表信息同时查
      */
     @Override
-    public Page AdminGetRelations(Page<Relation> page, QueryWrapper queryWrapper) {
-        return baseMapper.selectPage(page,queryWrapper);
+    public Page<Relation> AdminGetRelations(Page<Relation> page, QueryWrapper<Relation> queryWrapper) {
+        return page==null?new Page<Relation>().setRecords(baseMapper.selectList(queryWrapper)):baseMapper.selectPage(page,queryWrapper);
     }
 }

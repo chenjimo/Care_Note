@@ -44,9 +44,9 @@ public class APIUtil {
      * @param msg 留言
      * @return 返回True表示成功false失败
      */
-    public boolean sendPhone(String phone, String name, String status, String temp, String msg) {
+    public String sendPhone(String phone, String name, String status, String temp, String msg) {
         String url = sendURL + phone + "&name=" + name + "&s1=" + status + "&s2=" + temp + "&s3=" + msg + "";
-        return "oK".equals(restTemplate.getForObject(url, String.class));
+        return restTemplate.getForObject(url, String.class);
     }
 
     /***

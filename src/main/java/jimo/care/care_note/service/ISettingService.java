@@ -47,11 +47,11 @@ public interface ISettingService extends IService<Setting> {
      * @param queryWrapper ALL
      * @return 均ALL
      */
-    Page AdminGetSettings(Page<Setting> page, QueryWrapper queryWrapper);
+    Page<Setting> AdminGetSettings(Page<Setting> page, QueryWrapper<Setting> queryWrapper);
 
     /***
      * @param queryWrapper 定时服务ByStatus
      * @return 取：|Count）
      */
-    Integer getSettingCount(QueryWrapper queryWrapper);
+    Integer getSettingCount(QueryWrapper<Setting> queryWrapper);
 }

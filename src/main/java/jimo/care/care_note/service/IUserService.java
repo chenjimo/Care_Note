@@ -44,7 +44,7 @@ public interface IUserService extends IService<User> {
      * @param queryWrapper ALL取
      * @return >3管理员ALL
      */
-    Page<User> AdminGetUsers(Page<User> page, QueryWrapper queryWrapper);
+    Page<User> AdminGetUsers(Page<User> page, QueryWrapper<User> queryWrapper);
 
     /***
      * @param email ByEmail
@@ -55,5 +55,11 @@ public interface IUserService extends IService<User> {
     /***
      * @return 己注册用户总数
      */
-    Integer getCount(QueryWrapper queryWrapper);
+    Integer getCount(QueryWrapper<User> queryWrapper);
+
+    /***
+     * @param uid ByUID
+     * @return USER
+     */
+    User getUserByUID(Integer uid);
 }

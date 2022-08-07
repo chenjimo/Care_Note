@@ -11,7 +11,6 @@ import java.util.List;
 /***
  * 天气状况回馈数据提取处理工具
  */
-@Component
 public class JSONUtil {
     private static Object result;
 

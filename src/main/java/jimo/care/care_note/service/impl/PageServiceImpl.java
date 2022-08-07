@@ -59,7 +59,7 @@ public class PageServiceImpl extends ServiceImpl<PageMapper, Page> implements IP
      * @return ALL
      */
     @Override
-    public com.baomidou.mybatisplus.extension.plugins.pagination.Page getPageList(com.baomidou.mybatisplus.extension.plugins.pagination.Page<Page> page, QueryWrapper queryWrapper) {
+    public com.baomidou.mybatisplus.extension.plugins.pagination.Page<Page> getPageList(com.baomidou.mybatisplus.extension.plugins.pagination.Page<Page> page, QueryWrapper<Page> queryWrapper) {
         return baseMapper.selectPage(page,queryWrapper);
     }
 

@@ -1,7 +1,5 @@
 package jimo.care.care_note.util;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +29,7 @@ class APIUtilTest {
         String s1 = "1234567890123456789012345678";
         String s2 = "1234567890123456789012345678";
         String s3 = "1234567890123456789012345678";//28
-        boolean send = apiUtil.sendPhone(phoneNumber, name, s1, s2, s3);
+        String send = apiUtil.sendPhone(phoneNumber, name, s1, s2, s3);
         System.out.println(send);
     }
 

@@ -17,7 +17,7 @@ public class LimitUtil {
      */
     public String stringLimit(String s){
         if (s.length()>stringLimit) {
-            s=s.substring(0,stringLimit);
+            s=s.substring(0,stringLimit-3)+"...";
         }
         return s;
     }

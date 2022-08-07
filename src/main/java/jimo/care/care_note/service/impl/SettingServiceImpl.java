@@ -70,7 +70,7 @@ public class SettingServiceImpl extends ServiceImpl<SettingMapper, Setting> impl
      * @return 均ALL
      */
     @Override
-    public Page AdminGetSettings(Page<Setting> page, QueryWrapper queryWrapper) {
+    public Page<Setting> AdminGetSettings(Page<Setting> page, QueryWrapper<Setting> queryWrapper) {
         return baseMapper.selectPage(page,queryWrapper);
     }
 
@@ -79,7 +79,7 @@ public class SettingServiceImpl extends ServiceImpl<SettingMapper, Setting> impl
      * @return 取：|Count）
      */
     @Override
-    public Integer getSettingCount(QueryWrapper queryWrapper) {
+    public Integer getSettingCount(QueryWrapper<Setting> queryWrapper) {
         return baseMapper.selectCount(queryWrapper);
     }
 }

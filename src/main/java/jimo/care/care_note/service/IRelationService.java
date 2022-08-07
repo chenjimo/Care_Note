@@ -1,12 +1,9 @@
 package jimo.care.care_note.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import jimo.care.care_note.bean.Relation;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
+import jimo.care.care_note.bean.Relation;
 
 /**
  * <p>
@@ -40,17 +37,15 @@ public interface IRelationService extends IService<Relation> {
     boolean updateByRID(Relation relation);
 
     /***
-     * @param page
      * @param uID ByUID
      * @return ALL，一般是关联其他表信息同时查
      */
     Page<Relation> UserGetRelations(Page<Relation> page,Integer uID);
 
     /***
-     * @param page
      * @param queryWrapper ALL|ByUID|BySID|ByMID取
      * @return ALL，一般是关联其他表信息同时查
      */
-    Page<Relation> AdminGetRelations(Page<Relation> page, QueryWrapper queryWrapper);
+    Page<Relation> AdminGetRelations(Page<Relation> page, QueryWrapper<Relation> queryWrapper);
 
 }

@@ -51,7 +51,7 @@ class RelationServiceImplTest {
 
     @Test
     void adminGetRelations() {
-        relationService.AdminGetRelations(new Page<>(1,5),null)
+        relationService.AdminGetRelations(null,null)
                 .getRecords().forEach(System.out::println);
     }
 }

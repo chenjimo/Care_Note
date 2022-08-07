@@ -1,9 +1,8 @@
 package jimo.care.care_note.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import jimo.care.care_note.bean.Module;
+import jimo.care.care_note.bean.CareModule;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -18,12 +17,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author JIMO
  * @since 2022-08-04
  */
-public interface IModuleService extends IService<Module> {
+public interface IModuleService extends IService<CareModule> {
     /***
      * @param module （全参，部分自动初始化，默认0公开）
      * @return 增
      */
-    boolean insert(Module module);
+    boolean insert(CareModule module);
 
     /***
      * @param mID ByUID&ByMID、
@@ -42,13 +41,13 @@ public interface IModuleService extends IService<Module> {
      * @param module （ByUID&ByMID改：）
      * @return ALL
      */
-    boolean UserUpdateModule(Module module);
+    boolean UserUpdateModule(CareModule module);
 
     /***
      * @param module 改
      * @return ALL
      */
-    boolean AdminUpdateModule(Module module);
+    boolean AdminUpdateModule(CareModule module);
 
     /***
      *
@@ -56,19 +55,19 @@ public interface IModuleService extends IService<Module> {
      * @param uID 查（ByUID|0
      * @return 均ALL
      */
-    Page UserGetModules(Page<Module> page,Integer uID);
+    Page<CareModule> UserGetModules(Page<CareModule> page, Integer uID);
 
     /***
      * @param queryWrapper ByMID|ByUID|0取
      * @return 均ALL
      */
-    Page AdminGetModules(Page<Module> page, QueryWrapper queryWrapper);
+    Page<CareModule> AdminGetModules(Page<CareModule> page, QueryWrapper<CareModule> queryWrapper);
 
     /***
      * @param mID ByMID
      * @return OneALL
      */
-    Module getModule(Integer mID);
+    CareModule getModule(Integer mID);
 
     /***
      * @param queryWrapper 获取模板统计

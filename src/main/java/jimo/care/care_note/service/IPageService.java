@@ -40,7 +40,7 @@ public interface IPageService extends IService<Page> {
      * @param queryWrapper ByPID取
      * @return ALL
      */
-    com.baomidou.mybatisplus.extension.plugins.pagination.Page getPageList(com.baomidou.mybatisplus.extension.plugins.pagination.Page<Page> page, QueryWrapper queryWrapper);
+    com.baomidou.mybatisplus.extension.plugins.pagination.Page<Page> getPageList(com.baomidou.mybatisplus.extension.plugins.pagination.Page<Page> page, QueryWrapper<Page> queryWrapper);
 
     /***
      * @return 增加访问次数

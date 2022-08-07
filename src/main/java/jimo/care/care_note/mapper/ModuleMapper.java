@@ -1,6 +1,6 @@
 package jimo.care.care_note.mapper;
 
-import jimo.care.care_note.bean.Module;
+import jimo.care.care_note.bean.CareModule;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author JIMO
  * @since 2022-08-04
  */
-public interface ModuleMapper extends BaseMapper<Module> {
+public interface ModuleMapper extends BaseMapper<CareModule> {
 
 }

@@ -69,8 +69,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @return
      */
     @Override
-    public Page<User> AdminGetUsers(Page<User> page, QueryWrapper queryWrapper) {
-        return baseMapper.selectPage(page,queryWrapper);
+    public Page<User> AdminGetUsers(Page<User> page, QueryWrapper<User> queryWrapper) {
+        return page==null?new Page<User>().setRecords(baseMapper.selectList(queryWrapper))
+                :baseMapper.selectPage(page,queryWrapper);
     }
 
     /***
@@ -78,7 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @return 4>权限ID|name|phone|money|email|power
      */
     @Override
-    public User UserGetUser( String email) {
+    public User UserGetUser(String email) {
         return baseMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getEmail,email)
                 .select(User::getId,User::getName,User::getPwd,User::getPhone,User::getMoney,User::getEmail,User::getPower,User::getSex));
     }
@@ -87,7 +88,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @return 己注册用户总数
      */
     @Override
-    public Integer getCount(QueryWrapper queryWrapper) {
+    public Integer getCount(QueryWrapper<User> queryWrapper) {
         return baseMapper.selectCount(queryWrapper);
+    }
+
+    /***
+     * @param uId ByUID
+     * @return USER
+     */
+    @Override
+    public User getUserByUID(Integer uId) {
+        return baseMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getId,uId));
     }
 }

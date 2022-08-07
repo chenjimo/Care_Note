@@ -1,9 +1,8 @@
 package jimo.care.care_note.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import jimo.care.care_note.bean.Module;
+import jimo.care.care_note.bean.CareModule;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -58,13 +57,13 @@ ModuleServiceImpl moduleService;
 
     @Test
     void adminGetModules() {
-        moduleService.AdminGetModules(new Page<>(1,5),new QueryWrapper<>().like("name","JIMO"))
+        moduleService.AdminGetModules(new Page<>(1,5),new QueryWrapper<CareModule>().like("name","JIMO"))
                 .getRecords().forEach(System.out::println);
     }
 
     @Test
     void getModule() {
-        Module module = moduleService.getModule(1);
+        CareModule module = moduleService.getModule(1);
         System.out.println(module);
     }
 

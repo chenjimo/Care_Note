@@ -1,4 +1,4 @@
-package jimo.care.care_note.util;
+package jimo.care.care_note.info.send;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -7,14 +7,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 
+import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class LimitUtilTest {
-    @Resource
-    LimitUtil limitUtil;
-
+class SendPhoneTest {
+@Resource
+SendPhone sendPhone;
     @Test
-    void stringLimit() {
-        System.out.println(limitUtil.stringLimit("气象条件有利于空气污染物稀释、扩散和清除，可在室外正常活动。123456789"));
+    void open() {
+        sendPhone.setPhone("17761612832");
+        System.out.println(sendPhone);
     }
 }
