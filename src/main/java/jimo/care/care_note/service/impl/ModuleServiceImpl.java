@@ -97,7 +97,7 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, CareModule> imp
      */
     @Override
     public Page<CareModule> AdminGetModules(Page<CareModule> page, QueryWrapper<CareModule> queryWrapper) {
-        return baseMapper.selectPage(page,queryWrapper);
+        return page==null?new Page<CareModule>().setRecords(baseMapper.selectList(queryWrapper)):baseMapper.selectPage(page,queryWrapper);
     }
 
     /***

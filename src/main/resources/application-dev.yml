@@ -40,7 +40,7 @@ jimo:
   api-util:
     weatherURL: "https://XXXXXX.cn/hw/weather?city=" #你的天气请求API地址
     sendURL: "https://XXXXX.cn/hw/hwSms?phoneNumber=" #你的消息发送API地址
-    stringLimit: 33 #字符长度限制
+    stringLimit: 30 #字符长度限制
     webhookURL: XXXXXX #你的钉钉机器人POST地址
     webhookKey: XXXXX #你的钉钉机器人Key
   message:

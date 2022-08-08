@@ -1,44 +1,69 @@
 package jimo.care.care_note.filter;
 
-import jimo.care.care_note.util.APIUtil;
+import jimo.care.care_note.info.user.UserPower;
+import jimo.care.care_note.module.DeveloperMessage;
 import jimo.care.care_note.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 
 /**
- * @author crush
- * @ControllerAdvice
- * @ResponseBody //表示返回的对象，Spring会自动把该对象进行json转化，最后写入到Response中。
+ * <p>
+ * 自定义异常处理服务实现类，
+ * 全局检测系统异常提醒6级以上管理员（开发员级别）。
+ * 有待优化细分的一场领域提示！（需细粒度化再处理！）
+ * </p>
+ *
+ * @author JIMO
+ * @since 2022-08-08
  */
+@Slf4j
+@ControllerAdvice
+@ResponseBody
+@Component
+public class SendError{
 
-//@Slf4j
-//@RestControllerAdvice
-//@ResponseBody
-public class SendError extends APIUtil{
-//    @Value("${spring.mail.username}")
-//    private String from;
-//
-//    /**
-//     * //表示让Spring捕获到所有抛出的SignException异常，并交由这个被注解的方法处理。
-//     * //表示设置状态码
-//     * @return
-//     */
-//    @ExceptionHandler(Exception.class)
-//    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-//    String handleException(Exception e){
-//        String time = DateUtil.localDateTimeToString(LocalDateTime.now());
-//        String message = e.getMessage();
-//        String localizedMessage = e.getLocalizedMessage();
-//        log.error("Time:{} Exception:{}",time,message);
-//     sendMail(from,"CARE_NOTE_ERROR", "Time:"+time +"\n"+e.toString());
-//     return e.toString();
-//    }
+    @Resource
+    DeveloperMessage developerMessage;
+    /**
+     * //表示让Spring捕获到所有抛出的SignException异常，并交由这个被注解的方法处理。
+     * //表示设置状态码
+     * 有待细分优化！！！！
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    String handleException(Exception e){
+        String time = DateUtil.localDateTimeToString(LocalDateTime.now());
+        String message = e.getMessage();
+        String localizedMessage = e.getLocalizedMessage();
+        Logger loggerFactory = LoggerFactory.getLogger(SendError.class);
+        loggerFactory.error("Time:{} Exception:{}",time,message);
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        List<String> stringList =new ArrayList<>();
+        stringList.add(String.valueOf(UserPower.ADMIN_ALERT));
+        stringList.add("CARE_NOTE_ERROR:系统级异常");
+        stringList.add("Time:"+time +"\n\tmessage:"+message
+                +"\n\tlocalizedMessage:"+localizedMessage+
+                "\n\n本次异常防重随机码："+new Random().nextInt(1000)+"\n\n\t");
+        developerMessage.text(stringList);
+     return e.toString();
+    }
+
 }

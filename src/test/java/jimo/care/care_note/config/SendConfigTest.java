@@ -1,38 +1,39 @@
 package jimo.care.care_note.config;
 
-import jimo.care.care_note.bean.Relation;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.Resource;
 
-import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class SendConfigTest {
+    @Resource
+    SendConfig sendConfig;
+    @Value("${jimo.api-util.stringLimit}")
+    private int stringLimit;
 
     @Test
     void accept() {
-        Relation relation = new Relation(1, 1, 1);
-        Map<Class,Object> map = new HashMap<Class,Object>();
-        map.put(Relation.class,relation);
-        Relation relation1 = (Relation) map.get(Relation.class);
-        System.out.println(relation1);
+        System.out.println(stringLimit);
     }
 
     @Test
     void scheduledMorning() {
+
     }
 
     @Test
     void scheduledNoon() {
+       // sendConfig.scheduledNoon();
     }
 
     @Test
     void scheduledEvening() {
+        //sendConfig.scheduledEvening();
     }
 
     @Test

@@ -71,7 +71,7 @@ public class SettingServiceImpl extends ServiceImpl<SettingMapper, Setting> impl
      */
     @Override
     public Page<Setting> AdminGetSettings(Page<Setting> page, QueryWrapper<Setting> queryWrapper) {
-        return baseMapper.selectPage(page,queryWrapper);
+        return page==null?new Page<Setting>().setRecords(baseMapper.selectList(queryWrapper)):baseMapper.selectPage(page,queryWrapper);
     }
 
     /***

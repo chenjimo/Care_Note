@@ -3,7 +3,7 @@ spring:
     #数据库用户名、密码，数据库名称(CareNote)按需求应要改写
     username: care_note
     password: care_note123456
-    url: jdbc:mysql://ubuntu:3306/care_note?serverTimezone=UTC&useUncide=true&characterEncoding=utf-8&useSSL=true
+    url: jdbc:mysql://192.168.10.8:3306/care_note?serverTimezone=UTC&useUncide=true&characterEncoding=utf-8&useSSL=true
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   #   关闭thymeleaf缓存
@@ -40,7 +40,7 @@ jimo:
   api-util:
     weatherURL: "https://itdage.cn/hw/weather?city=" #天气请求API地址
     sendURL: "https://itdage.cn/hw/hwSms?phoneNumber=" #消息发送API地址
-    stringLimit: 33 #字符长度限制
+    stringLimit: 33 #字符长度限制,jimo.care.care_note.util.LimitUtil可能数据读取不到,请手动处理或考虑用properties
     webhookURL: https://oapi.dingtalk.com/robot/send?access_token=290006f7f165f5dc1f505eb03f2d0c7d53b546b35eb75157f3acf9244daf9204
     webhookKey: SEC7938add9ebaaca27f0770b05aa51bd0cfc2f138304cbad559a5b85ad40231dca
   message:

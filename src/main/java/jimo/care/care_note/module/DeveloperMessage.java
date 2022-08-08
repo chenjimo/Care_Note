@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /***
  * 开发者异常错误提醒。
@@ -35,8 +36,15 @@ public class DeveloperMessage implements SendMessage{
         //先查询ADMIN的信息判断权限进行对应处理。
         userService.AdminGetUsers(null, Wrappers.<User>query().select("email","name","power")
                 .ge("power", Integer.parseInt(stringList.get(0)))).getRecords()
-                .forEach(u->apiUtil.sendMail(u.getEmail(),stringList.get(1),
-                        u.getName()+"-"+u.getPower()+"级管理员"+tittle+stringList.get(2)+"\n"+end));
+                .forEach(u->{
+                    try {
+                        Thread.sleep(77);//防止SQP过量
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    apiUtil.sendMail(u.getEmail(),stringList.get(1),
+                            u.getName()+"-"+u.getPower()+"级管理员"+tittle+stringList.get(2)+"\n\n本次信息短时发送批次随机码为："+new Random().nextInt(1000) +"\n\t\t"+end);
+                });
         return stringList;
     }
 

@@ -6,10 +6,16 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-/***
- * https://blog.csdn.net/LittleBlackyoyoyo/article/details/101277268
- * https://blog.51cto.com/cxhit/3241513
- * https://gitee.com/yzh52521/think-mail
+
+/**
+ * <p>
+ * 服务实现类
+ * 适配器类，为了防止由于后期API变革导致的使用异常
+ * 为了更好的适配API接口
+ * </p>
+ *
+ * @author JIMO
+ * @since 2022-08-07
  */
 @Data
 @Component

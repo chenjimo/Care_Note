@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class LimitUtil {
     @Value("${jimo.api-util.stringLimit}")
-    private int stringLimit;
-
+    private int stringLimit =33;//防止yml数据读取不到
     /***
      * @param s 对原数据进行限定
      * @return 返回合格长度
      */
     public String stringLimit(String s){
+
         if (s.length()>stringLimit) {
             s=s.substring(0,stringLimit-3)+"...";
         }

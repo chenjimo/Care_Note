@@ -5,6 +5,7 @@ import jimo.care.care_note.info.weather.WeatherIndex;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,11 @@ public class JSONUtil {
         JSONArray jsonArray = JSONArray.fromObject(daily.toString());
         jsonArray.forEach(d -> weatherDays.add(setWeatherDay((JSONObject) d)));
         return weatherDays;
+    }
+
+    public static String toJson(Object o) {
+        JSONObject jsonObject = JSONObject.fromObject(o);
+        return jsonObject.toString();
     }
 
     /***

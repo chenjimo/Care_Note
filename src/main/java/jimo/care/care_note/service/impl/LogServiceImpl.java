@@ -53,7 +53,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
      */
     @Override
     public Page<Log> AdminGetLog(Page<Log> page, QueryWrapper<Log> queryWrapper) {
-        return baseMapper.selectPage(page, queryWrapper);
+        return page==null?new Page<Log>().setRecords(baseMapper.selectList(queryWrapper)):baseMapper.selectPage(page, queryWrapper);
     }
 
     /***

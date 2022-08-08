@@ -1,10 +1,14 @@
 package jimo.care.care_note.util;
 
+import jimo.care.care_note.info.weather.WeatherDay;
+import jimo.care.care_note.info.weather.WeatherIndex;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 /***
  * API中的工具测试！！！
@@ -18,7 +22,14 @@ class APIUtilTest {
     @Test
     void getWeather() {
         String weather = apiUtil.getWeather("郑州");
+        JSONUtil.init(weather);
+        List<WeatherDay> weatherDays = JSONUtil.WeatherDays();
+        weatherDays.forEach(System.out::println);
+        List<WeatherIndex> weatherIndices = JSONUtil.indexList();
+        weatherIndices.forEach(System.out::println);
         System.out.println(weather);
+        System.out.println(weatherIndices.size()+"\n0-->"+weatherIndices.get(0)+"\n6--->"+weatherIndices.get(6));
+        System.out.println(weatherDays.size()+"\n0-->"+weatherDays.get(0)+"\n1--->"+weatherDays.get(1));
     }
 
     @Test
