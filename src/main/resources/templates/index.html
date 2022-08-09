@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Care-Note-BigNum</title>
+	<link rel="shortcut icon" href="http://jimo.fun/img/my/jm.png" />
+<!--	<link rel="stylesheet" href="../static/bigNum/icon/iconfont.css">-->
+	<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+	<script src="https://www.jq22.com/jquery/echarts-4.2.1.min.js"></script>
+	<!--青岛研锦网络科技有限公司   版权所有-->
+	
+
+</head>
+<body>
+<div class="container-header">
+    <ul class="nowTime">
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="location">
+        <i class="icon iconfont icon-buoumaotubiao23"></i>
+        <span class="areaName"></span>
+    </div>
+	<h3>JIMO-Care-Note关怀大数据可视化</h3>
+	<a href="/user" style='font-size: 18px;font-weight:1000;background: linear-gradient(to right, red, blue);-webkit-background-clip: text;color: transparent;'>用户登录或注册</a>--
+	<a href="http://jimo.fun/" style='font-size: 18px;font-weight:1000;background: linear-gradient(to right, red, blue);-webkit-background-clip: text;color: transparent;'>JIMO-空间</a>--
+	<a href="/admin" style='font-size: 18px;font-weight:1000;background: linear-gradient(to right, red, blue);-webkit-background-clip: text;color: transparent;'>管理员登录</a>
+</div>
+<div class="container-content">
+    <div class="top">
+		<div class="count-base" >
+			<div class="com-count-title">地区分布构成</div>
+			<div class="com-screen-content">
+				
+				<div id="main1" style="width:100%;height:300px;"></div>
+			</div>
+			<span class="left-top"></span>
+			<span class="right-top"></span>
+			<span class="left-bottom"></span>
+			<span class="right-bottom"></span>
+		</div>
+		<div class="count-resource q1">
+			<div class="com-count-title">消息发送总量统计</div>
+			<div class="com-screen-content2">
+				<ul class="use-data">
+					<li>
+						<p class="data-count">15681 </p>
+						<span class="data-name">数据总量</span>
+					</li>
+					<li>
+						<p class="data-count"> 1731</p>
+						<span class="data-name">更新量</span>
+					</li>
+					<li>
+						<p class="data-count">11753</p>
+						<span class="data-name">成功次数</span>
+					</li>
+				</ul>
+				<div class="com-screen-content">
+				 <div id="main2" style="margin-top:10px;width:100%;height:240px;"></div>
+				</div>
+				<span class="left-top"></span>
+				<span class="right-top"></span>
+				<span class="left-bottom"></span>
+				<span class="right-bottom"></span>
+			</div>
+		</div>
+		<div class="count-resource q2">
+			<div class="com-count-title">数据统计</div>
+			
+				
+			<div class="com-screen-content">
+				<ul class="data-label">
+					<li class="active" data-type="1">用户量</li>
+					<li data-type="2">模板量</li>
+					<li data-type="3">被关怀量</li>
+				</ul>
+				<ul class="use-data">
+
+				</ul>
+			 <div id="main3" style="margin-top:10px;width:100%;height:240px;"></div>
+			</div>
+			<span class="left-top"></span>
+			<span class="right-top"></span>
+			<span class="left-bottom"></span>
+			<span class="right-bottom"></span>
+		</div>
+    </div>
+	
+	<div class="mid">
+		<div class="count-share w1" >
+			<div class="com-count-title">天气自动化关怀动态更新数据</div>
+			<div class="com-screen-content">
+				    <div class="topRec_List">
+						<dl>
+							<dd>使用者</dd>
+							<dd>关怀对象</dd>
+							<dd>记录时间</dd>
+						</dl>
+						<div class="maquee">
+							<ul>
+								<li>
+									<div>JIMO</div>
+									<div>QQ</div>
+									<div>08:20:26 </div>
+								</li> 
+								<li>
+								
+									<div>FUJIE</div>
+									<div>FJ</div>
+									<div>08:20:36 </div>
+								</li> 
+								<li>
+									
+									<div>QQQ</div>
+									<div>JIMO</div>
+									<div>08:20:46 </div>
+								</li> 
+								<li>		
+									<div>FJ</div>
+									<div>JIMO</div>
+									<div>08:20:56</div>
+								</li> 
+								<li>							
+									<div>JIMO</div>
+									<div>FUJIE</div>
+									<div>08:21:04</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+			</div>
+			<span class="left-top"></span>
+			<span class="right-top"></span>
+			<span class="left-bottom"></span>
+			<span class="right-bottom"></span>
+		</div>
+		<div class="count-share w2" >
+			<div class="com-count-title">大数据展示平台访问次数</div>
+			<div class="com-screen-content">
+			 <div id="main5" style="width:100%;height:300px;"></div>
+			</div>
+			<span class="left-top"></span>
+			<span class="right-top"></span>
+			<span class="left-bottom"></span>
+			<span class="right-bottom"></span>
+		</div>
+	</div>
+	
+	<div class="bottom">
+		<div class="count-topic e1" >
+			<div class="com-count-title">（被热宠的）男神-女神榜！</div>
+			<div class="com-screen-content">
+			<div id="main6" style="width:100%;height:300px;"></div>
+			</div>
+			<span class="left-top"></span>
+			<span class="right-top"></span>
+			<span class="left-bottom"></span>
+			<span class="right-bottom"></span>
+		</div>
+		<div class="count-topic e2" >
+			<div class="com-count-title">（热门模板信息）情话榜！</div>
+			<div class="com-screen-content">
+			 <div id="main7" style="width:100%;height:300px;"></div>
+			</div>
+			<span class="left-top"></span>
+			<span class="right-top"></span>
+			<span class="left-bottom"></span>
+			<span class="right-bottom"></span>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<script type="text/javascript"> 
+//根据不同的分辨率调用不同的css和js
+	if(window.screen.width>=1600){
+		document.write("<link href='../static/bigNum/css/test-1920.css' rel='stylesheet' type='text/css'>");
+
+		document.writeln("<script type=\"text/javascript\" src=\"../static/bigNum/js/test-1920.js\"><\/script>");
+	}
+	else if(window.screen.width<1600&&window.screen.width>=1280){
+		document.write("<link href='../static/bigNum/css/test-1280.css' rel='stylesheet' type='text/css'>");
+
+		document.writeln("<script type=\"text/javascript\" src=\"../static/bigNum/js/test-1280.js\"><\/script>");
+	}else{
+	document.write("<link href='../static/bigNum/css/test-1024.css' rel='stylesheet' type='text/css'>");
+
+		document.writeln("<script type=\"text/javascript\" src=\"../static/bigNum/js/test-1024.js\"><\/script>");
+	}
+</script>
+
+<script type="text/javascript"> 
+	  function autoScroll(obj){
+			$(obj).find("ul").animate({
+				marginTop : "-39px"
+			},500,function(){
+				$(this).css({marginTop : "0px"}).find("li:first").appendTo(this);
+			})
+		}
+		$(function(){
+			setInterval('autoScroll(".maquee")',2000);
+		})
+</script> 
+</body>
+</html>

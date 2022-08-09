@@ -5,7 +5,8 @@ spring:
     password: care_note123456
     url: jdbc:mysql://192.168.10.8:3306/care_note?serverTimezone=UTC&useUncide=true&characterEncoding=utf-8&useSSL=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+  mvc:
+    static-path-pattern: /static/**
   #   关闭thymeleaf缓存
   thymeleaf:
     cache: false
@@ -29,11 +30,13 @@ spring:
       mail.smtp.socketFactory.port: 465
       mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
 
+
+
 server:
   port: 9277
 mybatis-plus:
   mapper-locations: "classpath:mapper/*.xml"
-  type-aliases-package: jimo.care.car_note.pojo
+  type-aliases-package: jimo.care.car_note.bean
   configuration:
     map-underscore-to-camel-case: true #开启驼峰命名
 jimo:
@@ -50,3 +53,4 @@ jimo:
       logo:
     ding:
     phone:
+  name: http://care.jimo.fun/ #域名地址！

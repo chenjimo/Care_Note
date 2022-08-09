@@ -7,6 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,7 +26,7 @@ class SendConfigTest {
 
     @Test
     void scheduledMorning() {
-
+       // sendConfig.scheduledMorning();
     }
 
     @Test
@@ -38,6 +41,13 @@ class SendConfigTest {
 
     @Test
     void scheduledOlg() {
+        Map<String,String> map =new HashMap<>();
+        map.put("xxx","yyy");
+        System.out.println(map);
+        System.out.println(map.getClass());
+        map= new HashMap<>();
+        System.out.println(map);
+        System.out.println(map.getClass());
     }
 
     @Test
