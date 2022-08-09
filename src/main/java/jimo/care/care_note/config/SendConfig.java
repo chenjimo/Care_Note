@@ -260,11 +260,11 @@ public class SendConfig implements Consumer<String>, SendFunction {
 
     /***
      * 每一次有过的Map结束
-     * 清楚归零防止下次缓存影响
+     * 清楚归零防止下次缓存影响，不能null处理缓存！！！！
      */
     private void zeroSet() {
-        weatherDayMap = null;
-        weatherIndexMap = null;
+        weatherDayMap = new HashMap<>();
+        weatherIndexMap = new HashMap<>();
     }
 
     /***
