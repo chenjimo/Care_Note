@@ -77,5 +77,14 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
         return baseMapper.selectMaps(queryWrapper);
     }
 
+    /***
+     * @param queryWrapper 通过条件
+     * @return 获取信息数
+     */
+    @Override
+    public Integer getCount(QueryWrapper queryWrapper) {
+        return baseMapper.selectCount(queryWrapper);
+    }
+
 
 }

@@ -31,6 +31,8 @@ public class Page {
 
     private Integer visit;
 
+    private String pageUrl;
+
     public Page() {
     }
 

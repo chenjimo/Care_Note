@@ -60,7 +60,8 @@ public class PageServiceImpl extends ServiceImpl<PageMapper, Page> implements IP
      */
     @Override
     public com.baomidou.mybatisplus.extension.plugins.pagination.Page<Page> getPageList(com.baomidou.mybatisplus.extension.plugins.pagination.Page<Page> page, QueryWrapper<Page> queryWrapper) {
-        return baseMapper.selectPage(page,queryWrapper);
+        return page==null?new com.baomidou.mybatisplus.extension.plugins.pagination.Page<Page>().setRecords(baseMapper.selectList(queryWrapper))
+                :baseMapper.selectPage(page,queryWrapper);
     }
 
     /***
@@ -72,5 +73,25 @@ public class PageServiceImpl extends ServiceImpl<PageMapper, Page> implements IP
         Page page1 = new Page(pID);
         page1.setVisit(page==null?1:page.getVisit()+1);
         return baseMapper.updateById(page1)>0;
+    }
+
+    /***
+     * @param pID 通过请求的路径获取
+     * @return Page信息
+     */
+    @Override
+    public Page getPage(Integer pID) {
+        return baseMapper.selectOne(Wrappers.<Page>lambdaQuery().eq(Page::getId,pID));
+    }
+    /***
+     * @param url 通过请求地址，增加一层处理，选择性增加数据访问次数！
+     * @return 获取本地地址
+     */
+    public String getPageUrl(String url,boolean add){
+        Page page = baseMapper.selectOne(Wrappers.<Page>lambdaQuery().select(Page::getPageUrl, Page::getId).eq(Page::getUrl, url));
+        if (add){
+            AddVisit(page.getId());
+        }
+        return page.getPageUrl();
     }
 }

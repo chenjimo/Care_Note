@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 
 
 @RestController
-@RequestMapping("/admin/api")
+@RequestMapping("/api")
 public class SendAPIController {
     @Resource
     SendConfig sendConfig;

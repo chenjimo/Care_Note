@@ -54,4 +54,10 @@ public interface ILogService extends IService<Log> {
      * @return Integer
      */
     List<Map<String,Object>> getCountMaps(QueryWrapper queryWrapper);
+
+    /***
+     * @param queryWrapper 通过条件
+     * @return 获取信息数
+     */
+    Integer getCount(QueryWrapper queryWrapper);
 }

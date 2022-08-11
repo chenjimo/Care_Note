@@ -1,21 +1,19 @@
-package jimo.care.care_note.controller;
+package jimo.care.care_note.controller.admin;
 
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- *  UserController前端控制器
+ *  AdminController前端控制器
  * </p>
  *
  * @author JIMO
  * @since 2022-08-04
  */
-@Controller
-@RequestMapping("/user")
-public class UserController {
+@RestController
+@RequestMapping("/admin")
+public class AdminController {
 
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jimo.care.care_note.bean.Log;
 import jimo.care.care_note.info.LogCountType;
+import jimo.care.care_note.info.log.CountThree;
 import jimo.care.care_note.mapper.LogMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -77,5 +79,17 @@ class LogServiceImplTest {
         List<Map<String, Object>> maps = baseMapper.selectMaps(qw);
         System.out.println("长："+maps.size());
         maps.forEach(m->System.out.println(m.size()+"--->>>"+m+m.keySet()));
+    }
+    @Test
+    void controller1(){
+        logService.AdminGetLog(new Page<Log>(1, 10), Wrappers.<Log>query().select("u_id", "s_id", "date").orderByDesc("date"))
+                .getRecords().forEach(System.out::println);
+    }
+    @Test
+    void controller2(){
+        Integer count = logService.getCount(null);
+        Integer date = logService.getCount(Wrappers.<Log>query().ge("date", LocalDateTime.now().minusDays(3)));
+        Integer count2 = logService.getCount(Wrappers.<Log>query().eq("status", "true"));
+         System.out.println(new CountThree(count,count2,date));
     }
 }

@@ -22,4 +22,26 @@ public class LimitUtil {
         return s;
     }
 
+    /***
+     * @param s 传入字符串
+     * @return 回馈加密信息
+     */
+    public String encode(String s){
+        if (s.length()==1){
+            s = "*";
+        }else if (s.length()==2){
+            s = s.substring(0,1)+"*";
+        }else if (s.length()==3){
+            s = s.substring(0,1)+"*"+s.substring(2,3);
+        }else if (s.length()>3){
+            String s1 = "";
+            for (int i =0;i<s.length()/2;i++){
+                s1 = "*"+s1;
+            }
+            s = s.substring(0,s.length()/2-1)+s1+
+                    s.substring(s.length()/2-1+s1.length());
+        }
+        return s;
+    }
+
 }

@@ -46,4 +46,15 @@ public interface IPageService extends IService<Page> {
      * @return 增加访问次数
      */
     boolean AddVisit(Integer pID);
+
+    /***
+     * @param pID 通过请求的路径获取
+     * @return Page信息
+     */
+    Page getPage(Integer pID);
+    /***
+     * @param url 通过请求地址，增加一层处理，数据访问次数！
+     * @return 获取本地地址
+     */
+     String getPageUrl(String url,boolean add);
 }

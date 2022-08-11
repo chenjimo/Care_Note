@@ -13,7 +13,7 @@ var people_data = {"uploadData":[{"count":1300},{"count":1686},{"count":1692},{"
 var picture_data = {"uploadData":[{"count":330},{"count":786},{"count":492},{"count":842},{"count":421},{"count":673}
 				,{"count":932},{"count":447},{"count":583},{"count":436},{"count":331},{"count":433}],
 	"updateData":[{"count":10},{"count":81},{"count":23},{"count":97},{"count":23},{"count":73}
-				,{"count":23},{"count":51},{"count":01},{"count":52},{"count":01},{"count":77}],
+				,{"count":23},{"count":51},{"count":1},{"count":52},{"count":1},{"count":77}],
 	"viewData":[{"count":451},{"count":342},{"count":523},{"count":323},{"count":421},{"count":812}
 				,{"count":728},{"count":619},{"count":613},{"count":554},{"count":481},{"count":301}]};
 			
@@ -52,7 +52,125 @@ var Tpl3 = '<li>' +
 			'<li>' +
 			'<p class="data-count">2983</p>' +
 			'<span class="data-name">共享次数</span>' +
-			'</li>' ;		
+			'</li>' ;
+$(function () {
+	$.getJSON("/num/changes", null, function (result) {
+		//绑定数据
+		legal_person_data = {
+			"uploadData": result[0].date1,
+			"uploadData": result[0].date3,
+			"viewData": result[0].date2
+		};
+		people_data = {
+			"uploadData": result[1].date1,
+			"updateData": result[1].date3,
+			"viewData": result[1].date2
+		};
+		picture_data = {
+			"uploadData": result[2].date1,
+			"updateData": result[2].date3,
+			"viewData": result[2].date2
+		};
+	});
+
+	$.getJSON("/num/all/count", null, function (result) {
+		//绑定数据
+		Tpl1 = '<li>' +
+			'<p class="data-count">' + result[0].total + '</p>' +
+			'<span class="data-name">用户总量</span>' +
+			'</li>' +
+			'<li>' +
+			'<p class="data-count">' + result[0].update + '</p>' +
+			'<span class="data-name">最近三天活跃数</span>' +
+			'</li>' +
+			'<li>' +
+			'<p class="data-count">' + result[0].success + '</p>' +
+			'<span class="data-name">可请求次数</span>' +
+			'</li>';
+		Tpl2 = '<li>' +
+			'<p class="data-count">' + result[1].total + '</p>' +
+			'<span class="data-name">模板总量</span>' +
+			'</li>' +
+			'<li>' +
+			'<p class="data-count">' + result[1].update + '</p>' +
+			'<span class="data-name">公开数</span>' +
+			'</li>' +
+			'<li>' +
+			'<p class="data-count">' + result[1].success + '</p>' +
+			'<span class="data-name">共享次数</span>' +
+			'</li>';
+		Tpl3 = '<li>' +
+			'<p class="data-count">' + result[2].total + '</p>' +
+			'<span class="data-name">总人数</span>' +
+			'</li>' +
+			'<li>' +
+			'<p class="data-count">' + result[2].update + '</p>' +
+			'<span class="data-name">近三天关怀量</span>' +
+			'</li>' +
+			'<li>' +
+			'<p class="data-count">' + result[2].success + '</p>' +
+			'<span class="data-name">总关怀次数</span>' +
+			'</li>';
+
+	});
+});
+/*一下数据jQuery无法改动意思静态值或提前已经使用所以要使用别的方法！！！Template存入值表达式取出*/
+var localIfo = [{value: 88, name: "河南"}, {value: 77, name: "上海"}, {value: 66, name: "深圳"}, {
+	value: 55,
+	name: "北京"
+}, {value: 100, name: "其他"}];
+var data = {
+	"uploadData": [{"count": 1000}, {"count": 2986}, {"count": 3392}, {"count": 2642}, {"count": 3521}, {"count": 2573}
+		, {"count": 3132}, {"count": 3147}, {"count": 3283}, {"count": 3336}, {"count": 3831}, {"count": 3633}],
+	"updateData": [{"count": 310}, {"count": 281}, {"count": 123}, {"count": 97}, {"count": 323}, {"count": 373}
+		, {"count": 423}, {"count": 451}, {"count": 501}, {"count": 452}, {"count": 201}, {"count": 177}],
+	"viewData": [{"count": 1651}, {"count": 1842}, {"count": 2223}, {"count": 2123}, {"count": 2021}, {"count": 1812}
+		, {"count": 1928}, {"count": 2019}, {"count": 2613}, {"count": 2754}, {"count": 2981}, {"count": 3001}]
+};
+$.ajax({
+	type :"get",
+	url :"/num/local",
+	data :null,
+	async :false,/*取消异步操作带来的影响*/
+	success :function(data){
+		localIfo= [];
+		for (i = 0; i < data.length; i++) {
+			localIfo.push({value: data[i].visit, name: data[i].local});
+		}
+	}
+});
+$.ajax({
+	type :"get",
+	url :"/num/all/log",
+	data :null,
+	async :false,/*取消异步操作带来的影响*/
+	success :function(result){
+		//绑定数据
+		data = {
+			"uploadData": result.date1,
+			"updateData": result.date2,
+			"viewData": result.date3
+		};
+	}
+});
+
+var XData = ["大数据", "用户登录", "用户首页", "管理登录", "管理首页", "关怀操作", "模板操作", "用户操作", "管理操作"];
+var yData = [1243, 2315, 1164, 3021, 3521, 4121, 2001, 1983, 1432];
+$.ajax({
+	type :"get",
+	url :"/num/pages",
+	data :null,
+	async :false,/*取消异步操作带来的影响*/
+	success :function(result){
+		//绑定数据
+		XData=[];
+		yData=[];
+		for (i = 0 ; i<result.length;i++){
+			XData.push(result[i].local);
+			yData.push(result[i].visit)
+		}
+	}
+});
 $('.com-screen-content .use-data').html(Tpl1);			
 // 基于准备好的dom，初始化echarts实例
 var myChart1= echarts.init(document.getElementById('main1'));
@@ -64,10 +182,10 @@ var myChart6 = echarts.init(document.getElementById('main6'));
 var myChart7 = echarts.init(document.getElementById('main7'));
 
 getNowFormatDate();
-init_myChart1();
-init_myChart2();
+init_myChart1(localIfo);
+init_myChart2(data);
 init_myChart3(legal_person_data);
-init_myChart5();
+init_myChart5(XData,yData);
 init_myChart6();
 init_myChart7();
 
@@ -126,7 +244,7 @@ function init_myChart3(data) {
 			itemGap: 10,
 			top: '16',
 			right: '10',
-			data: ['数据总量','共享次数','更新量'],
+			data: ['数一线', '数二线', '数三线'],
 			textStyle: {
 				fontSize: 10,
 				color: '#a0a8b9'
@@ -155,7 +273,7 @@ function init_myChart3(data) {
 			axisTick: {
 				show: false
 			},
-			data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月'],
+			data: ['今天', '昨天', '前天', '大前天', '五天前', '六天前', '七天前'],
 			offset: 10
 		}],
 		yAxis: [{
@@ -182,7 +300,7 @@ function init_myChart3(data) {
 			}
 		}],
 		series: [{
-			name: '数据总量',
+			name: '数一线',
 			type: 'line',
 			smooth: true,
 			showSymbol: false,
@@ -211,7 +329,7 @@ function init_myChart3(data) {
 			},
 			data: uploadCnt
 		}, {
-			name: '共享次数',
+			name: '数二线',
 			type: 'line',
 			smooth: true,
 			showSymbol: false,
@@ -240,7 +358,7 @@ function init_myChart3(data) {
 			},
 			data: viewCnt
 		},  {
-			name: '更新量',
+			name: '数三线',
 			type: 'line',
 			smooth: true,
 			showSymbol: false,
@@ -333,7 +451,7 @@ function init_myChart2() {
 			itemGap: 10,
 			top: '16',
 			right: '10',
-			data: ['数据总量','共享次数','更新量'],
+			data: ['数据总量','成功次数','更新量'],
 			textStyle: {
 				fontSize: 10,
 				color: '#a0a8b9'
@@ -362,7 +480,7 @@ function init_myChart2() {
 			axisTick: {
 				show: false
 			},
-			data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月'],
+			data: ['七天前', '六天前', '五天前', '四天前', '大前前', '前天', '昨天'],
 			offset: 10
 		}],
 		yAxis: [{
@@ -418,7 +536,7 @@ function init_myChart2() {
 			},
 			data: uploadCnt
 		}, {
-			name: '共享次数',
+			name: '成功次数',
 			type: 'line',
 			smooth: true,
 			showSymbol: false,
@@ -482,7 +600,7 @@ function init_myChart2() {
 }
 
 
-function init_myChart1(){
+function init_myChart1(localIfo){
 	option = {
 			tooltip : {
 				trigger: 'item',
@@ -492,19 +610,11 @@ function init_myChart1(){
 		   
 			series : [
 				{
-					name: '资源总量构成',
+					name: '地区分布图',
 					type: 'pie',
 					radius : '20%',
 					center: ['50%', '50%'],
-					data:[
-						{value:435, name:'公安局'},
-						{value:679, name:'民政局'},
-						{value:848, name:'气象局'},
-						{value:348, name:'统计局'},
-						{value:679, name:'交通局'},
-						{value:848, name:'人社局'},
-						{value:1348, name:'其他'}
-					],
+					data:localIfo,
 					itemStyle: {
 						emphasis: {
 							shadowBlur: 10,
@@ -530,11 +640,10 @@ function init_myChart1(){
 	myChart1.setOption(option);
 }
 
-function init_myChart5(){
+function init_myChart5(XData,yData){
 	//var XData=["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
 	//var yData=[1243,2315,1164,3021,3521,4121,2001,1983,2541,2612,2331,1992];
-	var XData=["一月","二月","三月","四月","五月","六月","七月","八月","九月"];
-	var yData=[1243,2315,1164,3021,3521,4121,2001,1983,1432];
+
 	option = {
 		backgroundColor:"",
 		xAxis: {
@@ -682,9 +791,17 @@ function init_myChart5(){
 
 
 function init_myChart6(){
-	var data = {"uploadData":[{"count":5421,"areaName":"公共服务"},{"count":6512,"areaName":"健康保障"},{"count":3721,"areaName":"安全生产"},{"count":2842,"areaName":"价格监督"}
-							,{"count":6427,"areaName":"能源安全"},{"count":4422,"areaName":"信用体系"},{"count":1020,"areaName":"城乡建设"},{"count":1421,"areaName":"社区治理"},{"count":1776,"areaName":"生态环保"}
-							,{"count":2428,"areaName":"应急维稳"}]};
+	var data = {
+		"uploadData": [{"count": 5421, "areaName": "JIMO"}, {"count": 6512, "areaName": "FUJIE"}, {
+			"count": 3721,
+			"areaName": "小鬼"
+		}, {"count": 2842, "areaName": "小奶狗"}
+			, {"count": 6427, "areaName": "刘亦菲"}, {"count": 4422, "areaName": "彭于晏"}, {
+				"count": 1020,
+				"areaName": "小狼狗"
+			}, {"count": 1421, "areaName": "Q"}, {"count": 1776, "areaName": "台湾回归"}
+			, {"count": 2428, "areaName": "日本回归"}]
+	};
 	var uploadCnt = [];
 	var updateCnt = [];
 	//var collectionCnt = [];
@@ -887,8 +1004,8 @@ var colorList = [
     '#f9c813',
     '#0176c0'
 ];
-var xData = ['公共服务','健康保障','安全生产','价格监督','能源安全','信用体系', '城乡建设', '社区治理', '生态环保','应急维稳'];
-var yData = [2912,3991,4621,3941,3313,6631,5543,4463,6541,3381];
+	var xData = ['小白', '舔狗', '大舔狗', '油腻', '风骚', '绿茶🍵', '渣男', '闺蜜', '小甜心', '亲情'];
+	var yData = [2912, 3991, 4621, 3941, 3313, 6631, 5543, 4463, 6541, 3381];
 option = {
     color:colorList,
     "tooltip": {
