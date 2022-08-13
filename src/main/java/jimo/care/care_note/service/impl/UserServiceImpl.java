@@ -37,7 +37,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setPower(user.getPower()==null?UserPower.USER:user.getPower());
         user.setBz(user.getBz()==null?"初来乍到的小鬼":user.getBz());
         user.setCreateTime(user.getCreateTime()==null? LocalDateTime.now():user.getCreateTime());
-        user.setMoney(user.getMoney()==null?0:user.getMoney());
         user.setSex(user.getSex()==null?1:user.getSex());
         return baseMapper.insert(user)>0;
     }
@@ -81,7 +80,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public User UserGetUser(String email) {
         return baseMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getEmail,email)
-                .select(User::getId,User::getName,User::getPwd,User::getPhone,User::getMoney,User::getEmail,User::getPower,User::getSex));
+                .select(User::getId,User::getName,User::getPwd,User::getPhone,User::getMoney,User::getEmail,User::getPower,User::getSex,User::getCreateTime));
     }
 
     /***

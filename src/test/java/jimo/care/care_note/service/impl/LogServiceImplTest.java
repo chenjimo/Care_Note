@@ -3,7 +3,10 @@ package jimo.care.care_note.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jimo.care.care_note.bean.CareModule;
 import jimo.care.care_note.bean.Log;
+import jimo.care.care_note.bean.Relation;
+import jimo.care.care_note.bean.User;
 import jimo.care.care_note.info.LogCountType;
 import jimo.care.care_note.info.log.CountThree;
 import jimo.care.care_note.mapper.LogMapper;
@@ -13,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +36,8 @@ import java.util.Map;
 class LogServiceImplTest {
     @Autowired
     LogServiceImpl logService;
+    @Resource
+    ModuleServiceImpl moduleService;
 
     @Test
     void insert() {
@@ -91,5 +98,14 @@ class LogServiceImplTest {
         Integer date = logService.getCount(Wrappers.<Log>query().ge("date", LocalDateTime.now().minusDays(3)));
         Integer count2 = logService.getCount(Wrappers.<Log>query().eq("status", "true"));
          System.out.println(new CountThree(count,count2,date));
+    }
+    @Test
+    void getConsole(){
+        List<Integer> finalList = new ArrayList<>();
+        moduleService.AdminGetModules(null, Wrappers.<CareModule>query().select("id").eq("u_id", 1)).getRecords()
+                .forEach(m -> finalList.add(m.getId()));
+        System.out.println(finalList);
+        System.out.println(finalList.size());
+        System.out.println(finalList.size()==0?0:logService.getCount(Wrappers.<Log>query().in("m_id", finalList)));
     }
 }

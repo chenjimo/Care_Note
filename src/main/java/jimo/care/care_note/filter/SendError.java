@@ -1,7 +1,10 @@
 package jimo.care.care_note.filter;
 
+import com.taobao.api.ApiException;
 import jimo.care.care_note.info.user.UserPower;
 import jimo.care.care_note.module.DeveloperMessage;
+import jimo.care.care_note.module.ding.DingError;
+import jimo.care.care_note.util.CodeUtils;
 import jimo.care.care_note.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -35,9 +38,10 @@ import java.util.Random;
 @ResponseBody
 @Component
 public class SendError{
-
     @Resource
     DeveloperMessage developerMessage;
+    @Resource
+    DingError dingError;
     /**
      * //表示让Spring捕获到所有抛出的SignException异常，并交由这个被注解的方法处理。
      * //表示设置状态码
@@ -50,20 +54,32 @@ public class SendError{
         String message = e.getMessage();
         String localizedMessage = e.getLocalizedMessage();
         Logger loggerFactory = LoggerFactory.getLogger(SendError.class);
+        String code = CodeUtils.getCode();
         loggerFactory.error("Time:{} Exception:{}",time,message);
         try {
             Thread.sleep(300);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
+        List<String> list = new ArrayList<>();
+        list.add(message);
+        list.add(localizedMessage);
+        list.add(time);
+        list.add(code);
+        try {
+            dingError.text(list);
+        } catch (ApiException ex) {
+            ex.printStackTrace();
+        }
         List<String> stringList =new ArrayList<>();
         stringList.add(String.valueOf(UserPower.ADMIN_ALERT));
         stringList.add("CARE_NOTE_ERROR:系统级异常");
-        stringList.add("Time:"+time +"\n\tmessage:"+message
-                +"\n\tlocalizedMessage:"+localizedMessage+
-                "\n\n本次异常防重随机码："+new Random().nextInt(1000)+"\n\n\t");
+        stringList.add("Time:"+time +"\n\t<br><br>message:"+message
+                +"\n\t<br><br>详细信息已发到钉钉维运群中:localizedMessage-请前往查看！"+
+                "\n\n<br>本次异常防重随机码："+code+"\n\n\t");
         developerMessage.text(stringList);
-     return e.toString();
+
+        return e.toString();
     }
 
 }

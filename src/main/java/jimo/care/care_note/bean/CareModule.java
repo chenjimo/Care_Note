@@ -3,6 +3,7 @@ package jimo.care.care_note.bean;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -37,6 +38,8 @@ public class CareModule implements Serializable {
 
     private Integer uId;
 
+    @TableField(exist = false)
+    private Integer visit;
     public CareModule() {
     }
 

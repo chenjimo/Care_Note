@@ -1,6 +1,7 @@
 package jimo.care.care_note.config;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.taobao.api.ApiException;
 import jimo.care.care_note.bean.*;
 import jimo.care.care_note.info.user.UserPower;
 import jimo.care.care_note.info.user.UserSettingStatus;
@@ -8,12 +9,14 @@ import jimo.care.care_note.info.weather.WeatherDay;
 import jimo.care.care_note.info.weather.WeatherIndex;
 import jimo.care.care_note.module.DeveloperMessage;
 import jimo.care.care_note.module.UserMessage;
+import jimo.care.care_note.module.ding.DingWeekly;
 import jimo.care.care_note.module.weather.WeatherEvening;
 import jimo.care.care_note.module.weather.WeatherMorning;
 import jimo.care.care_note.module.weather.WeatherNoon;
 import jimo.care.care_note.service.SendFunction;
 import jimo.care.care_note.service.impl.*;
 import jimo.care.care_note.util.APIUtil;
+import jimo.care.care_note.util.CodeUtils;
 import jimo.care.care_note.util.DateUtil;
 import jimo.care.care_note.util.JSONUtil;
 import net.sf.json.JSONObject;
@@ -58,6 +61,8 @@ public class SendConfig implements Consumer<String>, SendFunction {
     DeveloperMessage developerMessage;
     @Resource
     UserMessage userMessage;
+    @Resource
+    DingWeekly dingWeekly;
     private static Map<String, WeatherIndex> weatherIndexMap = new HashMap<>();
     private static Map<String, WeatherDay> weatherDayMap = new HashMap<>();
 
@@ -192,19 +197,19 @@ public class SendConfig implements Consumer<String>, SendFunction {
                     }
                     alterUser(user,
                             "<p style='font-size: 15px; background: linear-gradient(to right, red, blue);-webkit-background-clip: text; color: transparent;'>" +
-                                    "\t\t亲爱的用户就在刚刚‘"+errorTime+"'o(*￣▽￣*)ブ" +
-                                    "\n您成功的对您亲爱的："+setting.getName()+(setting.getSex() == 0 ? "女士" : "男士")+"发起了关怀！♥远在"+setting.getLocal()+"的"+(setting.getSex() == 0 ? "她" : "他")+"一定也会挂念您的！！！"+
-                                    "\n\t感谢您对JIMO-Care_Note的信任！🤩" +
-                                    "\n本次服务您的订单记录已经生成:订单编号为（"+aTrue1.getId()+"），您的余额还剩"+(money-1)+"次!"+
-                                    "\n温馨提示：亲，"+(money==1?"本次是JIMO最后一次为您服务了😔，我哪里做的不好可以打我骂我请不要离开我好嘛！╥﹏╥...":money<4?"系统检测到您的余额不足！请持续为爱充电，谢谢！":"您的余额充足O(∩_∩)O，起码这两天够用(●'◡'●)，大胆的为爱发光吧！")+
+                                    "<br><h1>亲爱的用户就在刚刚‘"+errorTime+"'o(*￣▽￣*)ブ</h1>" +
+                                    "<br>\t\t<h3>您成功的对您亲爱的："+setting.getName()+(setting.getSex() == 0 ? "女士" : "男士")+"发起了关怀！♥远在"+setting.getLocal()+"的"+(setting.getSex() == 0 ? "她" : "他")+"一定也会挂念您的！！！</h3>"+
+                                    "<br><h2>感谢您对JIMO-Care_Note的信任！🤩<h2>" +
+                                    "<br><br>本次服务您的订单记录已经生成:订单编号为（"+aTrue1.getId()+"），您的余额还剩"+(money-1)+"次!"+
+                                    "\n\n<br>温馨提示：亲，"+(money==1?"本次是JIMO最后一次为您服务了😔，我哪里做的不好可以打我骂我请不要离开我好嘛！╥﹏╥...":money<4?"系统检测到您的余额不足！请持续为爱充电，谢谢！":"您的余额充足O(∩_∩)O，起码这两天够用(●'◡'●)，大胆的为爱发光吧！")+
                                     "</p>");
                 }else {
                     //扣钱失败提醒管理员和运维团队！！！
                     adminAlter(182,
                             "订单异常","此订单日志记录：’"+aTrue+"‘" +(aTrue?"("+aTrue1+")":"请尽快检查程序！！！")+
-                                    "\n\n订单内容:用户-"+user.getName()+"(ID:"+user.getId()+"),关怀对象-"+setting.getName()+"(ID:"+setting.getId()+")，模板-"+module.getName()+"(ID:"+module.getId()+")" +
-                                    "\n\n"+(!aTrue ?"请手动检测账本，对用户的money进行核实处理！":"请尽快维修程序！！！" +
-                                    "\n\n异常时间："+errorTime)
+                                    "\n\n<br>订单内容:用户-"+user.getName()+"(ID:"+user.getId()+"),关怀对象-"+setting.getName()+"(ID:"+setting.getId()+")，模板-"+module.getName()+"(ID:"+module.getId()+")" +
+                                    "\n\n<br>"+(!aTrue ?"请手动检测账本，对用户的money进行核实处理！":"请尽快维修程序！！！" +
+                                    "\n\n<br>异常时间："+errorTime)
                     );
                 }
             }else {
@@ -213,9 +218,9 @@ public class SendConfig implements Consumer<String>, SendFunction {
                 boolean aTrue = logService.insert(aTrue1);
                 adminAlter(173,
                         "消息发送异常","此订单日志记录：’"+aTrue+"‘" +(aTrue?"("+aTrue1+")":"请尽快检查程序！！！")+
-                                "\n订单内容:用户-"+user.getName()+"(ID:"+user.getId()+"),关怀对象-"+setting.getName()+"(ID:"+setting.getId()+")，模板-"+module.getName()+"(ID:"+module.getId()+")" +
-                                "\n"+(!aTrue ?"请手动检测，对用户、模板、关怀对象进行核对处理！":"请尽快维修程序！！！" +
-                                "\nSendPhone异常时间："+DateUtil.localDateTimeToString(LocalDateTime.now()))
+                                "\n<br>订单内容:用户-"+user.getName()+"(ID:"+user.getId()+"),关怀对象-"+setting.getName()+"(ID:"+setting.getId()+")，模板-"+module.getName()+"(ID:"+module.getId()+")" +
+                                "\n<br>"+(!aTrue ?"请手动检测，对用户、模板、关怀对象进行核对处理！":"请尽快维修程序！！！" +
+                                "\n<br>SendPhone异常时间："+DateUtil.localDateTimeToString(LocalDateTime.now()))
                 );
             }
 
@@ -276,7 +281,7 @@ public class SendConfig implements Consumer<String>, SendFunction {
         strings.add(String.valueOf(UserPower.ADMIN_ALERT));
         strings.add("Care_NOte运维提醒:API-ERROR");
         strings.add("激发消息位置：jimo.care.care_note.config中的getWeather方法用处" + h + "行出现了异常!\n" +
-                "接口给出的信息为：" + error + "\n我觉得可能原因为：Weather-API的url失效、密钥过时、QPS过高、参数信息异常等！！！");
+                "<br><br>接口给出的信息为：" + error + "\n我觉得可能原因为：Weather-API的url失效、密钥过时、QPS过高、参数信息异常等！！！");
         developerMessage.text(strings);
     }
     /***
@@ -293,7 +298,7 @@ public class SendConfig implements Consumer<String>, SendFunction {
         strings.add(String.valueOf(UserPower.ADMIN_ALERT));
         strings.add("Care_NOte运维提醒:"+alter+"");
         strings.add("激发消息位置：jimo.care.care_note.config中的" + h + "行出现了异常!\n" +
-                "接口给出的信息为：" + error + "\n我觉得可能原因为：API的url失效、密钥过时、QPS过高、参数信息异常等！！！");
+                "<br><br>接口给出的信息为：" + error + "\n我觉得可能原因为：API的url失效、密钥过时、QPS过高、参数信息异常等！！！");
         developerMessage.text(strings);
     }
     /***
@@ -305,14 +310,28 @@ public class SendConfig implements Consumer<String>, SendFunction {
         Integer count = userService.getCount(null);
         Integer moduleCount = moduleService.getModuleCount(null);
         Integer settingCount = settingService.getSettingCount(null);
+        String time = DateUtil.localDateTimeToString(LocalDateTime.now());
+        String code = CodeUtils.getCode();
         stringList.add(String.valueOf(adminAlert));
         stringList.add("Care_NOte运维:每日详报！");
         stringList.add("<p style='font-size: 15px;  background: linear-gradient(to right, red, blue);-webkit-background-clip: text; color: transparent;'>" +
-                "\n\n日志记录汇总概况：" +countMaps+
-                "\n\n截至今日当前时间：" +DateUtil.localDateTimeToString(LocalDateTime.now())+
-                "\n\n注册的用户总数为："+count+"\t创建的模板总数为："+moduleCount+"\t关怀的对象总数为："+settingCount+
-                "</p>");
+                "<br><br>日志记录汇总概况：" +countMaps+
+                "<br><br>截至今日当前时间：" +time+
+                "<br><br>注册的用户总数为："+count+"\t<br>创建的模板总数为："+moduleCount+"\t<br>关怀的对象总数为："+settingCount+
+                "</p>" + "<br><br>==此次消息防重码为："+ code+"==*/");
         developerMessage.text(stringList);
+        List<String> list = new ArrayList<>();
+        list.add(countMaps.toString());
+        list.add(time);
+        list.add(String.valueOf(count));
+        list.add(String.valueOf(moduleCount));
+        list.add(String.valueOf(settingCount));
+        list.add(code);
+        try {
+            dingWeekly.text(list);
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
     }
     /***
      * @param weather 天气信息处理JSONString

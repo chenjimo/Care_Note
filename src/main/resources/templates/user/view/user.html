@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CareNote-User</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link href="../../../static/css/normalize.css" type="text/css" rel="stylesheet"/>
+    <link href="../../../static/css/common.css" type="text/css" rel="stylesheet"/>
+    <script src="../../../static/js/jquery.min.js" type="text/javascript"></script>
+    <script src="../../../static/js/notice.js" type="text/javascript"></script>
+    <script src="../../../static/js/common.js" type="text/javascript"></script>
+    <script src="../../../static/layer/layer.js"></script>
+    <style type="text/css">
+        body {
+            background: #f4f4f4;
+        }
+
+        .userInfoCont {
+
+        }
+
+        .userHeaderDiv {
+            background: #fff;
+        }
+
+        .userHeaderDiv .userHeader {
+            width: 90%;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 20px 0px 10px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .userHeader .headerImg {
+            width: 20%;
+            float: left;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .userHeader .headerImg img {
+            display: block;
+        }
+
+        .userHeader p {
+            margin: 0;
+            margin-left: 15px;
+            padding-left: 35px;
+            font-weight: bold;
+            float: left;
+            background: url(../../../static/img/images/student.png) no-repeat center left;
+            background-size: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .userHeaderDiv .headerProm {
+            width: 90%;
+            margin: 0 auto;
+            font-size: 12px;
+            color: #888888;
+        }
+
+        .headerProm .editUserInfo {
+            line-height: 60px;
+            font-size: 14px;
+            color: #333333;
+            background: url(../../../static/img/images/rightArrow.png) no-repeat center right;
+            background-size: 20px;
+            border-bottom: 1px solid #f4f4f4;
+        }
+
+        .headerProm .expUserInfo {
+            line-height: 60px;
+            font-size: 14px;
+            color: #333333;
+            background: url(../../../static/img/images/rightArrow.png) no-repeat center right;
+            background-size: 20px;
+        }
+
+        .headerProm .userQRcode {
+            line-height: 60px;
+            font-size: 14px;
+            color: #333333;
+            background: url(../../../static/img/images/rightArrow.png) no-repeat center right;
+            background-size: 20px;
+        }
+
+        .userNewsCont {
+            width: 90%;
+            padding: 0px 5%;
+            margin: 30px auto 10px;
+            background: #fff;
+        }
+
+        .userNewsCont .userNews {
+            width: 100%;
+            border-bottom: 1px solid #f4f4f4;
+            background: url(../../../static/img/images/rightArrow.png) no-repeat center right;
+            background-size: 20px;
+        }
+
+        .userNewsCont .userNews p {
+            width: 80%;
+            margin: 0px;
+            padding-left: 30px;
+            line-height: 60px;
+            font-size: 12px;
+            background: url(../../../static/img/images/usernotice.png) no-repeat center left;
+            background-size: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .userNewsCont .userNewsLast {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="headerNav">
+        <div class="headerNavTop">
+            <div class="headerNavIcon headerNavIconOut"><span></span><span></span></div>
+        </div>
+        <div class="headerNavCont">
+            <a href="/user/console">用户首页</a>
+            <a href="/user/my">个人中心</a>
+            <a href="/user/module">模板信息</a>
+            <a href="/user/setting">关怀信息</a>
+            <a href="/jimo.fun">JIMO友情链接</a>
+        </div>
+    </div>
+
+    <div class="userInfoCont">
+        <div class="userHeaderDiv">
+            <a href="/user/update">
+                <div class="userHeader">
+                    <div class="headerImg">
+                        <img src="../../../static/img/img.png" alt="正在加载中..." width="100%">
+                    </div>
+                    <p id="userName" style="line-height: 108px; width: 372px;">姓名</p>
+                </div>
+            </a>
+            <div class="headerProm">
+                <p>请及时完善个人信息，方便为您提供更精准的服务！</p>
+                <input id="PageContext" type="hidden" value="${pageContext.request.contextPath}"/>
+                <div class="editUserInfo" id="info1">
+                    修改或完善个人信息
+                </div>
+                <div class="userQRcode" id="info2">
+                    余额-充值
+                </div>
+                <div class="userQRcode" id="info3">
+                    联系-我们（开发JIMO）
+                </div>
+                <div class="userQRcode" id="info4">
+                    开发者JIMO的个人主页（友情链接）
+                </div>
+                <div class="userQRcode" id="info5">
+                    JIMO-版权声明及用户协议！
+                </div>
+                <div class="userQRcode" id="info6">
+                    退出登录！
+                </div>
+            </div>
+        </div>
+        <div class="userNewsCont">
+            <div class="userNews  userNewsRead">
+                <p>[通知]请及时完善个人信息，方便为您提供更精准的服务！</p>
+            </div>
+        </div>
+        <p><a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=RS8sKCoyKjcpIQU0NGsmKig" style="text-decoration:none;"><img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_02.png"/></a> <a href="https://wpa.qq.com/msgrd?v=3&uin=1517962688&site=qq&menu=yes" target="_blank" style="font-size: 17px;background: linear-gradient(to right, red, blue);-webkit-background-clip: text;color: transparent;"><img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_12.png"/></a></p>
+    </div>
+
+    <div class="footer">
+        <p class="copyInfotxt">&copy;JIMO-Care_Note版权声明</p>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $.getJSON("/user/message", null, function (data) {
+           if (data.status===200){
+               $("#userName").html(data.data.name);
+           }else {
+               layer.msg("加载失败，请重新尝试！");
+           }
+        });
+        //用于调整页面的大小自动工具
+        var pageContextVal = $("#PageContext").val();
+        var initFun = function () {
+            var windowH = $(window).height();
+            var contentH = $(".userInfoCont").height();
+            if ((windowH - 30 - 50) > contentH) {
+                $(".userInfoCont").css({"height": (windowH - 30 - 50) + "px"}); //nav footer
+            }
+            var headerW = $(".userHeader").width();
+            var headImgH = headerW * 0.2;
+            var headPW = headerW * 0.8 - 60; // 15+35
+            $(".userHeader p").css({"line-height": headImgH + "px", "width": headPW + "px"});
+        };
+
+        initFun();
+        $(window).resize(function () {
+            initFun();
+        });
+        //添加事件！
+        $("#info1").click(function () {
+            window.location.href = "/user/update";
+        });
+        $("#info2").click(function () {
+            window.location.href = "/user/money";
+        });
+        $("#info3").click(function () {
+            layer.msg("见左下角的联系方式，点击即可");
+        });
+        $("#info4").click(function () {
+            window.location.href = "/jimo.fun";
+        });
+        $("#info5").click(function () {
+            layer.msg("请放心使用！一切解释权均归JIMO，暂未完善！");
+        });
+        $("#info6").click(function () {
+            window.location.href = "/login/out";
+        });
+    });
+</script>
+</body>
+</html>

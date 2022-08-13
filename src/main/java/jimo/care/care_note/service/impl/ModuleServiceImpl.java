@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author JIMO
- * @since 2022-08-04
+ * @since 2022-08-13
  */
 @Service
 public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, CareModule> implements IModuleService {
@@ -26,14 +26,14 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, CareModule> imp
      */
     @Override
     public boolean insert(CareModule module) {
-        module.setName(module.getName()==null?"JIMO关怀！":module.getName());
-        module.setUId(module.getUId()==null?0:module.getUId());
-        module.setStatus(module.getStatus()==null?"AUTO":module.getStatus());
-        module.setTemp(module.getTemp()==null?"AUTO":module.getTemp());
-        module.setMorning(module.getMorning()==null?"AUTO":module.getMorning());
-        module.setNoon(module.getNoon()==null?"AUTO":module.getNoon());
-        module.setEvening(module.getEvening()==null?"AUTO":module.getEvening());
-        return baseMapper.insert(module)>0;
+        module.setName(module.getName() == null ? "JIMO关怀！" : module.getName());
+        module.setUId(module.getUId() == null ? 0 : module.getUId());
+        module.setStatus(module.getStatus() == null ? "AUTO" : module.getStatus());
+        module.setTemp(module.getTemp() == null ? "AUTO" : module.getTemp());
+        module.setMorning(module.getMorning() == null ? "AUTO" : module.getMorning());
+        module.setNoon(module.getNoon() == null ? "AUTO" : module.getNoon());
+        module.setEvening(module.getEvening() == null ? "AUTO" : module.getEvening());
+        return baseMapper.insert(module) > 0;
     }
 
     /***
@@ -43,7 +43,7 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, CareModule> imp
      */
     @Override
     public boolean UserDeleteModule(Integer mID, Integer uID) {
-        return baseMapper.delete(Wrappers.<CareModule>update(new CareModule(mID,uID)))>0;
+        return baseMapper.delete(Wrappers.<CareModule>update(new CareModule(mID, uID))) > 0;
     }
 
     /***
@@ -52,7 +52,7 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, CareModule> imp
      */
     @Override
     public boolean AdminDeleteModule(Integer mID) {
-        return baseMapper.deleteById(mID)>0;
+        return baseMapper.deleteById(mID) > 0;
     }
 
     /***
@@ -61,7 +61,7 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, CareModule> imp
      */
     @Override
     public boolean UserUpdateModule(CareModule module) {
-        return baseMapper.update(module,Wrappers.<CareModule>update(new CareModule(module.getId(),module.getUId())))>0;
+        return baseMapper.update(module, Wrappers.<CareModule>update(new CareModule(module.getId(), module.getUId()))) > 0;
     }
 
     /***
@@ -70,7 +70,7 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, CareModule> imp
      */
     @Override
     public boolean AdminUpdateModule(CareModule module) {
-        return baseMapper.updateById(module)>0;
+        return baseMapper.updateById(module) > 0;
     }
 
     /***
@@ -81,12 +81,17 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, CareModule> imp
      */
     @Override
     public Page<CareModule> UserGetModules(Page<CareModule> page, Integer uID) {
-        return baseMapper.selectPage(page,
+        return page == null ?
+                new Page<CareModule>().setRecords(
+                        baseMapper.selectList(Wrappers.<CareModule>query().
+                                eq("u_id", uID).or().eq("u_id", 0)
+                                .or().eq("u_id", -1).or().eq("u_id", -2)))
+                : baseMapper.selectPage(page,
                 Wrappers.<CareModule>lambdaUpdate()
-                        .eq(CareModule::getUId,uID)
-                        .or().eq(CareModule::getUId,0)
-                        .or().eq(CareModule::getUId,-1)
-                        .or().eq(CareModule::getUId,-2));
+                        .eq(CareModule::getUId, uID)
+                        .or().eq(CareModule::getUId, 0)
+                        .or().eq(CareModule::getUId, -1)
+                        .or().eq(CareModule::getUId, -2));
     }
 
     /***
@@ -97,7 +102,7 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, CareModule> imp
      */
     @Override
     public Page<CareModule> AdminGetModules(Page<CareModule> page, QueryWrapper<CareModule> queryWrapper) {
-        return page==null?new Page<CareModule>().setRecords(baseMapper.selectList(queryWrapper)):baseMapper.selectPage(page,queryWrapper);
+        return page == null ? new Page<CareModule>().setRecords(baseMapper.selectList(queryWrapper)) : baseMapper.selectPage(page, queryWrapper);
     }
 
     /***

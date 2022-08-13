@@ -1,9 +1,12 @@
 package jimo.care.care_note.bean;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -13,6 +16,7 @@ import java.io.Serializable;
  * sex：默认女=0，
  * law：为时间规律特性为以后增值功能做准备，设置为和cron相同的参数对应。
  * </p>
+ *
  * @author JIMO
  * @since 2022-08-04
  */
@@ -32,6 +36,18 @@ public class Setting implements Serializable {
     private Integer sex;
 
     private String law;
+    @TableField(exist = false)
+    private Integer visit;
+    @TableField(exist = false)
+    private Integer moduleId;
+
+    @TableField(exist = false)
+    private String moduleName;
+    @TableField(exist = false)
+    private String statusName;
+    @TableField(exist = false)
+    private List<CareModule> modules;
+
 
     public Setting() {
     }

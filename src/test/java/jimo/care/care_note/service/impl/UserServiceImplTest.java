@@ -27,7 +27,7 @@ class UserServiceImplTest {
 UserServiceImpl userService;
     @Test
     void insert() {
-        userService.insert(new User(null,"123456","745076951@qq.com",1,"18621127661","",20,null));
+        userService.insert(new User(null,"123456","745076951@qq.com",null,"18621127661",null,null,null));
     }
 
     @Test
@@ -60,4 +60,5 @@ UserServiceImpl userService;
         Integer count = userService.getCount(null);
         System.out.println(count);
     }
+
 }

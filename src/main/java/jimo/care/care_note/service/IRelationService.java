@@ -1,6 +1,7 @@
 package jimo.care.care_note.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import jimo.care.care_note.bean.Relation;
@@ -48,4 +49,12 @@ public interface IRelationService extends IService<Relation> {
      */
     Page<Relation> AdminGetRelations(Page<Relation> page, QueryWrapper<Relation> queryWrapper);
 
+    /***
+     * 获取绑定数目
+     */
+    Integer getCount(QueryWrapper queryWrapper);
+    /***
+     * 由对象ID查全部有关ID
+     */
+    Relation getRelation(Integer sID);
 }

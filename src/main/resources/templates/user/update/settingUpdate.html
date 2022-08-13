@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>CareNote-SettingUpdate</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+    <link href="../../../static/css/normalize.css" type="text/css" rel="stylesheet"/>
+    <link href="../../../static/css/common.css" type="text/css" rel="stylesheet"/>
+    <script src="../../../static/js/jquery.min.js" type="text/javascript"></script>
+    <script src="../../../static/js/common.js" type="text/javascript"></script>
+    <script src="../../../static/js/notice.js" type="text/javascript"></script>
+    <script src="../../../static/js/regexp.js" type="text/javascript"></script>
+    <script src="../../../static/js/jweixin-1.2.0.js" type="text/javascript"></script>
+    <style type="text/css">
+        .content {
+            position: relative;
+        }
+
+        .expEnterCont {
+            padding-bottom: 20px;
+        }
+
+        .expEnterCont .expEnterIcon {
+            width: 20%;
+            margin: 0 auto;
+        }
+
+        .expEnterCont .expEnterIcon p {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .submitBtn {
+            width: 90%;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 46px;
+            border-radius: 23px;
+            background: #1f72ff;
+            color: #fff;
+            font-weight: bolder;
+        }
+
+        .stopvoicerecord {
+            width: 40%;
+            height: 50px;
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            display: none;
+            background: purple;
+        }
+
+        .stopvoicerecord {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            display: none;
+        }
+
+        .stopvoicerecord .voiceRecordCont {
+            width: 60%;
+            background: #fff;
+            border-radius: 8px;
+            position: absolute;
+            top: calc((100% - 216px) / 2); /*30 + 110 +30 + 10 +36 == 216*/
+            left: 20%;
+            padding: 20px 0px 10px;
+        }
+
+        .stopvoicerecord .voiceRecordCont img {
+            display: block;
+            margin: 0 auto;
+            width: 110px;
+        }
+
+        .stopvoicerecord .voiceRecordCont .voiceRecordState {
+            margin: 0px;
+            text-align: center;
+            font-size: 14px;
+            color: #777777;
+            line-height: 30px;
+        }
+
+        .stopvoicerecord .voiceRecordCont #stopVoiceRecordBtn {
+            margin: 10px auto 0;
+            width: 90%;
+            text-align: center;
+            line-height: 36px;
+            background: #3eb94e;
+            font-size: 14px;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 18px;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="headerNav">
+        <div class="headerNavTop">
+            <div class="headerNavIcon headerNavIconOut"><span></span><span></span></div>
+        </div>
+        <div class="headerNavCont">
+            <a href="/user/console">用户首页</a>
+            <a href="/user/my">个人中心</a>
+            <a href="/user/module">模板信息</a>
+            <a href="/user/setting">关怀信息</a>
+            <a href="/jimo.fun">JIMO友情🔗</a>
+        </div>
+    </div>
+
+    <div class="expEnterCont">
+        <div class="expEnterIcon">
+            <img src="../../../static/img/img.png" width="128" alt="">
+            <p id="title">创-改被关怀者</p>
+        </div>
+        <div class="expEnterInput">
+            <input id="timestamp" type="hidden" value="${timestamp}"/>
+            <input id="noncestr" type="hidden" value="${nonceStr}"/>
+            <input id="signature" type="hidden" value="${signature}"/>
+            <input id="appId" type="hidden" value="${appId}"/>
+            <input id="PageContext" type="hidden" value="${pageContext.request.contextPath}"/>
+            <input id="wxCode" type="hidden" value="${wxCode}"/>
+            <div class="userInputCont">
+                <div class="inputTypeCont">
+                    <div class="inputTitle">名字</div>
+                    <label for="v1"></label><input type="text" id="v1" class="commonInputFunc" name="expressId"
+                                                   placeholder="关怀问候语，不可为空！">
+                </div>
+                <div class="inputTypeCont">
+                    <div class="inputTitle">地址</div>
+                    <label for="v2"></label><input type="text" id="v2" class="commonInputFunc"
+                                                   placeholder="被关怀者地址，不可为空！">
+                </div>
+                <div class="inputTypeCont">
+                    <div class="inputTitle">手机号</div>
+                    <label for="v3"></label><input type="text" id="v3" class="commonInputFunc" name="phone"
+                                                   placeholder="被关怀接手机号，不可为空！">
+                </div>
+                <div class="inputTypeCont">
+                    <div class="inputTitle">性别</div>
+                    <label for="v4"></label><select id="v4" name="sex">
+                    <option value="0">女性</option>
+                    <option value="1">男性</option>
+                </select>
+                </div>
+                <div class="inputTypeCont">
+                    <div class="inputTitle">模板</div>
+                    <label for="v5"></label>
+                    <select id="v5" name="module">
+                        <option value="0">JIMO关怀！（中）</option>
+                        <option value="-2">JIMO关怀！（女）</option>
+                        <option value="-1">JIMO关怀！（男）</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="inputTypeCont">
+                        <div class="inputTitle">服务</div>
+                        <label for="v6"></label>
+                        <select id="v6" name="company">
+                            <option value="7">全天关怀</option>
+                            <option value="3">早安-午安</option>
+                            <option value="5">早安-晚安</option>
+                            <option value="6">午安-晚安</option>
+                            <option value="1">早安</option>
+                            <option value="2">午安</option>
+                            <option value="4">晚安</option>
+                            <option value="0">停用</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="submitBtn" type="button">上传小可爱信息</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../../static/layer/layer.js"></script>
+<script type="text/javascript">
+    $(function () {
+        /*判断信息进行初始化处理*/
+        $.post("/user/setting/get", null, function (message) {
+            if (message.status === 200 || message.status === 201) {
+                $("#v5").html("");
+                var m = message.data.modules;
+                for (i = 0 ;i<m.length;i++){
+                    var item="<option value=\""+m[i].id+"\">"+m[i].name+"</option>"
+                    $("#v5").append(item);
+                }
+                $("#title").html(message.result);
+                layer.msg(message.result);
+                if (message.data !== null) {
+                    $("#v1").val(message.data.name);
+                    $("#v2").val(message.data.local);
+                    $("#v3").val(message.data.phone);
+                    $("#v4").val(message.data.sex);
+                    $("#v5").val(message.data.moduleId);
+                    $("#v6").val(message.data.status);
+                }
+            }
+        });
+        /*添加或修改的业务处理*/
+        $(".submitBtn").click(function () {
+            let val = $.trim($("#v1").val());
+            let val1 = $.trim($("#v2").val());
+            let val2 = $.trim($("#v3").val());
+            let val3 = $.trim($("#v4").val());
+            let val4 = $.trim($("#v5").val());
+            let val5 = $.trim($("#v6").val());
+            if (val === "" || val.length === 0||val1===""||val1.length===0||val2 === "" || val2.length === 0||val3 === "" || val3.length === 0||val4 === "" || val4.length === 0||val5 === "" || val5.length === 0) {
+                layer.msg("亲，均不能为空啊！")
+                return;
+            }
+            let load = layer.load();
+            $.post("/user/setting/post", {
+                name: val,
+                local: val1,
+                phone: val2,
+                sex: val3,
+                moduleId: val4,
+                status: val5,
+            }, function (data) {
+                layer.close(load);
+                layer.msg(data.result);
+                if (data.status === 200) {
+                    //录入成功
+                    window.location.href = "/user/setting";
+                } else {
+                    //录入失败
+                }
+            });
+        });
+    });
+
+</script>
+</html>

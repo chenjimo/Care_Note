@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CareNOte-UserUpdate</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link href="../../../static/css/normalize.css" type="text/css" rel="stylesheet" />
+    <link href="../../../static/css/common.css" type="text/css" rel="stylesheet" />
+    <script src="../../../static/js/jquery.min.js" type="text/javascript"></script>
+    <script src="../../../static/js/notice.js" type="text/javascript"></script>
+    <script src="../../../static/js/common.js" type="text/javascript"></script>
+    <script src="../../../static/js/regexp.js" type="text/javascript"></script>
+    <script src="../../../static/layer/layer.js"></script>
+    <style type="text/css">
+        .userInfoEditCont{
+            width: 100%;
+        }
+        .userInfoEditCont  .userInfoIcon{
+            width: 20%;
+            margin: 0px auto 10px;
+        }
+        .userInfoEditCont  .nickName{
+            font-size: 14px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* -----  cover ----- */
+        #coverCont{
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+        }
+        .userTypeCont{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 1001;
+            width: 80%;
+            background: #f4f4f4;
+            border: 1px solid #f1f1f1;
+            border-radius: 5px;
+            padding: 20px 0px 30px;
+            display: none;
+        }
+        .userTypeCont .userTypeTitle{
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 0px;
+        }
+        .userTypeCont .userType{
+            width: 90%;
+            margin: 5px auto;
+            overflow: hidden;
+        }
+        .userTypeCont .userType .teacherType{
+            width: 45%;
+            padding: 10px 2%;
+            float: left;
+            border: 1px solid #f1f1f1;
+            background: #fff;
+        }
+        .userTypeCont .userType .studentType{
+            width: 45%;
+            padding: 10px 2%;
+            float: right;
+            border: 1px solid #f1f1f1;
+            background: #fff;
+        }
+        .userType .typeImg{
+            width: 50%;
+            margin: 0px auto 5px;
+        }
+        .userType .typeTitle{
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            color: #333333;
+        }
+        .userType .typeDesc{
+            font-size: 12px;
+            color: #888888;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .submitBtn{
+            width: 90%;
+            margin: 0 auto 20px;
+            text-align: center;
+            line-height: 46px;
+            border-radius: 23px;
+            background: #888888;
+            color: #fff;
+            font-weight: bolder;
+        }
+
+        .userSelectCont{
+            width: 100%;
+            background: #fff;
+            font-size: 14px;
+            overflow: hidden;
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+            display: none;
+            z-index: 999;
+        }
+        .userSelectCont .userSelectTitle{
+            width: 90%;
+            padding: 0px 5%;
+            background: #fff;
+            overflow: hidden;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        .userSelectCont .userSelectTitle .selectCancelBtn{
+            float: left;
+            color: #1f72ff;
+            font-weight: bold;
+            line-height: 35px;
+        }
+        .userSelectCont .userSelectTitle .selectOkBtn{
+            float: right;
+            color: #1f72ff;
+            font-weight: bold;
+            line-height: 35px;
+        }
+        .userSelectCont  .selectNumCont{
+            width: 90%;
+            padding: 0px 5%;
+        }
+        .userSelectCont  .selectNumCont .selectNum{
+            overflow: hidden;
+            padding: 10px 0px;
+        }
+        .userSelectCont  .selectNumCont .selectNum .selectTitle{
+            float: left;
+            width: 100px;
+        }
+        .userSelectCont  .selectNumCont .selectNum .selectNumDiv{
+            float: left;
+            width: calc(100% - 100px);
+        }
+        .userSelectCont  .selectNumCont .selectNum .selectNumDiv ul{
+            list-style: none;
+            margin: 0px;
+            padding: 0px;
+        }
+        .userSelectCont  .selectNumCont .selectNum .selectNumDiv ul li{
+            float: left;
+            width: 24%;
+            margin: 0px 0px 5px 1%;
+            text-align: center;
+            line-height: 25px;
+        }
+
+        .selectNum .selectNumDiv ul li.unselect{
+            background: #f1f1f1;
+            color: #000;
+        }
+        .selectNum .selectNumDiv ul li.select{
+            background: #1f72ff;
+            color: #fff;
+        }
+
+        .userNewPhoneDiv{
+            display: none;
+        }
+
+        .gapText{
+            text-align: center;
+            font-size: 14px;
+            color: #888888;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="headerNav">
+        <div class="headerNavTop">
+            <div class="headerNavIcon headerNavIconOut"><span></span><span></span></div>
+        </div>
+        <div class="headerNavCont">
+            <a href="/user/console">用户首页</a>
+            <a href="/user/my">个人中心</a>
+            <a href="/user/module">模板信息</a>
+            <a href="/user/setting">关怀信息</a>
+            <a href="/jimo.fun">JIMO友情链接</a>
+        </div>
+    </div>
+
+    <div class="userInfoEditCont">
+        <div class="userInfoIcon">
+            <img src="../../../static/img/images/userInfoIcon.png" width="100%">
+        </div>
+        <div class="nickName" id="username">用户姓名</div>
+
+        <form>
+            <input id="PageContext" type="hidden" value="${pageContext.request.contextPath}" />
+            <input id="wxCode" type="hidden" value="${wxCode}" />
+            <input type="hidden" id="userId" name="userId" value="${sysWxUser.id}">
+            <div class="userInputCont">
+                <div class="inputTypeCont">
+                    <div class="inputTitle">新名称</div>
+                    <input type="text" class="commonInput" name="name" id="name" placeholder="请输入真实姓名..." >
+                </div>
+                <div class="inputTypeCont">
+                    <div class="inputTitle">新密码</div>
+                    <input type="text" class="commonInputFunc userOldPhone" id="pwd" name="userpwd" placeholder="请输入新密码" >
+                    <div class="commonFuncBtnModify userModifyPhone"></div>
+                </div>
+                <div class="inputTypeCont">
+                    <div class="inputTitle">新手机</div>
+                    <input type="text" class="commonInputFunc userOldPhone" id="phone" name="usernum" placeholder="请输入新手机号码" >
+                    <div class="commonFuncBtnModify userModifyPhone"></div>
+                </div>
+                <div class="inputTypeCont">
+                    <div class="inputTitle">性别</div>
+                    <label for="sex"></label><select id="sex" name="sex">
+                    <option value="1">男性</option>
+                    <option value="0">女性</option>
+                </select>
+                </div>
+                <div class="inputTypeCont">
+                    <div class="inputTitle">邮箱验证</div>
+                    <input type="text" class="verifiInput" id="code" name="code" placeholder="请输入验证码...">
+                    <input type="button" class="verifiBtn" value="发送验证码"  id="btnSendCode1" onclick="sendMessage1()">
+                </div>
+            </div>
+        </form>
+
+        <div class="submitBtn">修改信息</div>
+    </div>
+</div>
+</body>
+<script>
+    var phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
+    var count = 30;
+
+    function sendMessage1() {
+        curCount1 = count;
+        $("#btnSendCode1").attr("disabled", "true");
+        InterValObj1 = window.setInterval(SetRemainTime1, 1000);
+        //发送短信
+        let load = layer.load();
+        $.post("/user/send",null,function (data) {
+            layer.close(load);
+            layer.msg(data.result);
+        });
+    }
+    function SetRemainTime1() {
+        if (curCount1 == 0) {
+            window.clearInterval(InterValObj1);
+            $("#btnSendCode1").removeAttr("disabled");
+            $("#btnSendCode1").val("重新发送");
+        }
+        else {
+            curCount1--;
+            $("#btnSendCode1").val( + curCount1 + "秒再获取");
+        }
+    }
+    //获取原始用户信息
+    $.getJSON("/user/message",null,function (data) {
+        if (data.status==200){
+            $("#username").html(data.data.name);
+            $("#name").val("曾用："+data.data.name);
+            $("#phone").val("曾用："+data.data.phone);
+            $("#sex").val(data.data.sex)
+            layer.msg("请会员用户:'"+data.data.name+"'慎重修改信息！");
+        }else {
+            layer.msg(data.data.phone+"加载信息失败！请刷新重试！");
+        }
+    });
+    $(function(){
+        $(".submitBtn").click(function(){
+            var phone = $.trim($('#phone').val());
+            var pwd = $.trim($('#pwd').val());
+            var code = $.trim($('#code').val());
+            var sex = $("#sex").val();
+            const username = $("#name").val();
+            if (phone===""||phone.length===0||pwd===""||pwd.length===0||code===""||code.length===0||username===""||username.length===0){
+                layer.msg("信息不能为空！！！");
+                return false;
+            }
+            if (!phoneReg.test(phone)) {
+                layer.msg("请输入有效的手机号码!");
+                return false;
+            }
+            const windowId = layer.load();
+            $.post("/user/update",{
+                phone:phone,
+                pwd:pwd,
+                code:code,
+                name:username,
+                sex:sex
+            },function (data) {
+                layer.close(windowId);
+                //用户验证成功
+                layer.msg(data.result);
+            });
+        });
+    });
+</script>
+</html>

@@ -1,104 +1,217 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Admin-Control</title>
-		<link rel="shortcut icon" href="http://jimo.fun/img/my/jm.png" />
-		<meta name="description" content="Adding elasticity with SVG shape animations" />
-		<meta name="keywords" content="svg, morph, snap.svg, effect, animation, css, shape" />
-		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" type="text/css" href="../../static/admin/home/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="../../static/admin/home/fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
-		<link rel="stylesheet" type="text/css" href="../../static/admin/home/css/demo.css" />
-		<link rel="stylesheet" type="text/css" href="../../static/admin/home/css/sidebar.css" />
-		<script src="../../static/admin/home/js/snap.svg-min.js"></script>
-		<!--[if IE]>
-  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-	</head>
-	<body >
-			<nav id="menu" class="menu">
-				<button class="menu__handle"><span>Menu</span></button>
-				<div class="menu__inner">
-					<ul>
-						<li><a href="#"><span ><p align=center ><font size='5'>用户管理<span></font></p></a></li>
-						<li><a href="#"><span ><p align=center ><font size='5'>管理员管理<span></font></p></a></li>
-						<li><a href="http://jimo.fun/"><span ><p align=center ><font size='5'>模板管理<span></p></a></li>
-						<button type="button" id="btn" onClick="javascript:load_home();" >确认</button>
-					</ul>
-				</div>
-				<div class="morph-shape" data-morph-open="M300-10c0,0,295,164,295,410c0,232-295,410-295,410" data-morph-close="M300-10C300-10,5,154,5,400c0,232,295,410,295,410">
-					<svg width="100%" height="100%" viewBox="0 0 600 800" preserveAspectRatio="none">
-						<path fill="none" d="M300-10c0,0,0,164,0,410c0,232,0,410,0,410"/>
-					</svg>
-				</div>
-			</nav>
-			<div class="main">
-				<header class="codrops-header" >
-				</header>
-			</div><!-- /main -->
-			<div id="viewDiv" style="width: 100%;height: 800px;padding-left: 7%;padding-right: 0px;margin-right: 0px;">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin-Control</title>
+    <link rel="shortcut icon" href="http://jimo.fun/img/my/jm.png"/>
+    <meta name="description" content="Adding elasticity with SVG shape animations"/>
+    <meta name="keywords" content="svg, morph, snap.svg, effect, animation, css, shape"/>
+    <meta name="author" content="Codrops"/>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../../static/admin/home/css/normalize.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="../../static/admin/home/fonts/font-awesome-4.2.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/admin/home/css/demo.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/admin/home/css/sidebar.css"/>
+    <script src="../../static/admin/home/js/snap.svg-min.js"></script>
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<style>
+    body {
+        background: radial-gradient(200% 100% at bottom center, #f7f7b6, #e96f92, #75517d, #1b2947);
+        background: radial-gradient(220% 105% at top center, #1b2947 10%, #75517d 40%, #e96f92 65%, #f7f7b6);
+        background-attachment: fixed;
+        overflow: hidden;
+    }
+    .image {
+        width: 100%;
+        height: 900px;
+        background-image: url("../../static/img/qin.png");
+        no-repeat: 50% 50%;
+        background-size: 100%;
+        opacity: 0.3;
+    }
+    @keyframes rotate {
+        0% {
+            transform: perspective(400px) rotateZ(20deg) rotateX(-40deg) rotateY(0);
+        }
+        100% {
+            transform: perspective(400px) rotateZ(20deg) rotateX(-40deg) rotateY(-360deg);
+        }
+    }
+    .stars {
+        transform: perspective(500px);
+        transform-style: preserve-3d;
+        position: absolute;
+        bottom: 0;
+        perspective-origin: 50% 100%;
+        left: 50%;
+        animation: rotate 90s infinite linear;
+    }
 
-			</div>
+    .star {
+        width: 2px;
+        height: 2px;
+        background: #F7F7B6;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform-origin: 0 0 -300px;
+        transform: translate3d(0, 0, -300px);
+        backface-visibility: hidden;
+    }
+    .table{
+        width: 400px;
+        height: 350px;
+        margin: 80px auto;
+    }
+    .table form{
+        width: 100%;
+    }
+    .table .name{
+        width: 280px;
+        margin: 20px auto 30px auto;
+        display: block;
+        height: 30px;
+        border-radius: 20px;
+        border: none;
+        background: rgba(0,0,0,0.2);
+        text-indent: 0.5em;
+    }
+    .table .btn{
+        width: 100px;
+        height: 30px;
+        background: rgba(0,0,0,0.1);
+        border-radius: 8px;
+        border: none;
+        color: white;
+        margin: 0 auto;
+        display: block;
+    }
 
-			<script src="../../static/admin/home/js/classie.js"></script>
-		<script>
-			(function() {
+</style>
+<body>
+<!--背景效果-->
+<div class="stars"></div>
+<!--<div class="image" ></div>-->
+<nav id="menu" class="menu">
+    <button class="menu__handle"><span>Menu</span></button>
+    <div class="menu__inner">
+        <ul>
+            <li><a href="/login/admin"><span><p align=center><font size='5'>重新登录！<span></font></p></a></li>
+            <li><a href="/user"><span><p align=center><font size='5'>用户页面<span></font></p></a></li>
+            <li><a id="outLogin" href="#"><span><p align=center><font size='5'>退出登录<span></p></a></li>
+        </ul>
+    </div>
+    <div class="morph-shape" data-morph-open="M300-10c0,0,295,164,295,410c0,232-295,410-295,410"
+         data-morph-close="M300-10C300-10,5,154,5,400c0,232,295,410,295,410">
+        <svg width="100%" height="100%" viewBox="0 0 600 800" preserveAspectRatio="none">
+            <path fill="none" d="M300-10c0,0,0,164,0,410c0,232,0,410,0,410"/>
+        </svg>
+    </div>
+</nav>
+<div class="main">
+    <header class="codrops-header">
+    </header>
+</div><!-- /main -->
+    <div  class="BoxWrap">
+        <div id="viewDiv" class="horn">
+            <iframe id="health" class="devHtml" src="http://jimo.fun" ></iframe>
+        </div>
+    </div>
+</body>
 
-				function SVGMenu( el, options ) {
-					this.el = el;
-					this.init();
-				}
+<!-- 动态粒子背景 <script src="../../static/admin/home/js/body-style.js"></script>-->
+<script src="../../static/admin/login/js/jquery-2.1.1.min.js"></script>
+<script src="../../static/admin/home/js/classie.js"></script>
+<script>
+    /*class='devHtml' 是专门针对流动页面的约束*/
+    $(function () {
+        $("#outLogin").click(function () {
+            $("#viewDiv").fadeToggle("slow");
+            $("#viewDiv").html("<iframe id=\"health\" class=\"devHtml\" src=\"login.html\" ></iframe>");
+            $("#viewDiv").fadeToggle("slow");
+        });
+    })
+</script>
+<script>
+    (function () {
 
-				SVGMenu.prototype.init = function() {
-					this.trigger = this.el.querySelector( 'button.menu__handle' );
-					this.shapeEl = this.el.querySelector( 'div.morph-shape' );
+        function SVGMenu(el, options) {
+            this.el = el;
+            this.init();
+        }
 
-					var s = Snap( this.shapeEl.querySelector( 'svg' ) );
-					this.pathEl = s.select( 'path' );
-					this.paths = {
-						reset : this.pathEl.attr( 'd' ),
-						open : this.shapeEl.getAttribute( 'data-morph-open' ),
-						close : this.shapeEl.getAttribute( 'data-morph-close' )
-					};
+        SVGMenu.prototype.init = function () {
+            this.trigger = this.el.querySelector('button.menu__handle');
+            this.shapeEl = this.el.querySelector('div.morph-shape');
 
-					this.isOpen = false;
+            var s = Snap(this.shapeEl.querySelector('svg'));
+            this.pathEl = s.select('path');
+            this.paths = {
+                reset: this.pathEl.attr('d'),
+                open: this.shapeEl.getAttribute('data-morph-open'),
+                close: this.shapeEl.getAttribute('data-morph-close')
+            };
 
-					this.initEvents();
-				};
+            this.isOpen = false;
 
-				SVGMenu.prototype.initEvents = function() {
-					this.trigger.addEventListener( 'click', this.toggle.bind(this) );
-				};
+            this.initEvents();
+        };
 
-				SVGMenu.prototype.toggle = function() {
-					var self = this;
+        SVGMenu.prototype.initEvents = function () {
+            this.trigger.addEventListener('click', this.toggle.bind(this));
+        };
 
-					if( this.isOpen ) {
-						classie.remove( self.el, 'menu--anim' );
-						setTimeout( function() { classie.remove( self.el, 'menu--open' );	}, 250 );
-					}
-					else {
-						classie.add( self.el, 'menu--anim' );
-						setTimeout( function() { classie.add( self.el, 'menu--open' );	}, 250 );
-					}
-					this.pathEl.stop().animate( { 'path' : this.isOpen ? this.paths.close : this.paths.open }, 350, mina.easeout, function() {
-						self.pathEl.stop().animate( { 'path' : self.paths.reset }, 800, mina.elastic );
-					} );
-					
-					this.isOpen = !this.isOpen;
-				};
+        SVGMenu.prototype.toggle = function () {
+            var self = this;
 
-				new SVGMenu( document.getElementById( 'menu' ) );
+            if (this.isOpen) {
+                classie.remove(self.el, 'menu--anim');
+                setTimeout(function () {
+                    classie.remove(self.el, 'menu--open');
+                }, 250);
+            } else {
+                classie.add(self.el, 'menu--anim');
+                setTimeout(function () {
+                    classie.add(self.el, 'menu--open');
+                }, 250);
+            }
+            this.pathEl.stop().animate({'path': this.isOpen ? this.paths.close : this.paths.open}, 350, mina.easeout, function () {
+                self.pathEl.stop().animate({'path': self.paths.reset}, 800, mina.elastic);
+            });
 
-			})();
-			function load_home() {
-				document.getElementById("viewDiv").innerHTML = '<object type="text/html" data="../error/404.html" width="100%" height="100%"></object>';
-			}
-		</script>
+            this.isOpen = !this.isOpen;
+        };
 
-	</body>
+        new SVGMenu(document.getElementById('menu'));
+
+    })();
+</script>
+<script>
+    $(document).ready(function(){
+        var stars=800;  /*星星的密集程度，数字越大越多*/
+        var $stars=$(".stars");
+        var r=800;   /*星星的看起来的距离,值越大越远,可自行调制到自己满意的样子*/
+        for(var i=0;i<stars;i++){
+            var $star=$("<div/>").addClass("star");
+            $stars.append($star);
+        }
+        $(".star").each(function(){
+            var cur=$(this);
+            var s=0.2+(Math.random()*1);
+            var curR=r+(Math.random()*300);
+            cur.css({
+                transformOrigin:"0 0 "+curR+"px",
+                transform:" translate3d(0,0,-"+curR+"px) rotateY("+(Math.random()*360)+"deg) rotateX("+(Math.random()*-50)+"deg) scale("+s+","+s+")"
+
+            })
+        })
+    })
+</script>
+
 </html>

@@ -8,7 +8,8 @@ body {
 
 #dowebok {
     min-width: 100%;
-    min-height: 100vh;
+    min-height: 12.7vh;
+    top: 0.7vh;
     background-color: #ffcc80;
     display: flex;
     margin: 0 auto;
@@ -125,4 +126,41 @@ body {
 .content {
     display: none;
     opacity: 0;
+}
+.health{
+    height: 87vh;
+    width: 97%;
+    margin-left: 1.5%;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+    margin-top: 1.5vh;
+    /*background-image: url("../../../img/qin.png");
+    background-position: 50% 50%;*/
+    -webkit-transition: -webkit-transform 0.25s;
+    transition: transform 0.25s;
+    opacity: 1;
+}
+body {
+    height: 100vh;
+    width: 100%;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+    margin-top: 0;
+    background-color: #5569ae;
+    background-image: url("../../../img/bao.jpg");
+    background-position: 50% 50%;
+}
+
+.snow-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100001;
 }

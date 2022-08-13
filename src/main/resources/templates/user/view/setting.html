@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CareNote-Setting</title>
+    <link rel="shortcut icon" href="http://jimo.fun/img/my/jm.png"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <style type="text/css">
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: #eeeeee;
+            font-family: "楷体";
+        }
+        .item{
+            margin: 20px;
+            margin-bottom: 50px;
+        }
+        .imte_top{
+            text-align: center;
+        }
+        .imte_top>span{
+            font-size:14px;
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: #ddd;
+            color:#fff;
+            border-radius: 5px;
+        }
+        .item_content{
+            background-color: #fff;
+            padding: 25px 15px;
+            margin-top: 6px;
+        }
+        .item_content_top_1{
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .item_content_top_2{
+            color:#eee;
+            font-size: 14px;
+            margin: 5px 0px;
+        }
+        .item_content_top_3{
+            margin: 10px 0px;
+        }
+        .item_content_top_4{
+            margin: 10px 0px;
+        }
+        .item_content_bottom>a{
+            text-decoration: none;
+            color:#33e;
+        }
+        .submitBtn {
+            width: 90%;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 46px;
+            border-radius: 23px;
+            background: #1f72ff;
+            color: #fff;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+<br>
+<a href="/user/setting/post"><div class="submitBtn" >上传小可爱信息</div></a>>
+<div class="content" id="dataTable1">
+    <h1 align="center">您的正在关心的对象-查无记录！！！</h1>
+</div>
+<div class="content" id="dataTable2">
+    <h1 align="center" >您登记的关心对象空空如也~~~~</h1>
+</div>
+
+</body>
+<script src="../../../static/js/jquery.min.js"></script>
+<script src="../../../static/layer/layer.js"></script>
+<script>
+    function deleteByID(id) {
+        layer.confirm("请您谨慎操作！确定要删除该小可爱嘛？💔",
+            {btn:['忍痛割爱','不忍心下手']},function () {
+                $.post("/user/setting/delete/" + id, null, function (data) {
+                    layer.msg(data.result);
+                });
+            },function () {
+                layer.msg("已取消！是我也下不去手");
+            }
+        );
+    }
+    $(function () {
+        $.post("/user/setting",null,function (data) {
+            if (data.status!==200){
+                layer.msg("系统异常请重新尝试！");
+                return;
+            }
+            let time = new Date();
+            var data1 = data.data.onSetting;
+            if (data1!=null){
+                $("#dataTable1").html("");
+                for (i=0;i<data1.length;i++){
+                    var item = "<div class=\"item\">\n" +
+                        "\t\t\t<div class=\"imte_top\"><span>"+time+"</span></div>\n" +
+                        "\t\t\t<div class=\"item_content\">\n" +
+                        "\t\t\t\t<div class=\"item_content_top\">\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_1\">您正在关心的对象!</div>\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_2\">"+time+"</div>\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_3\">此可爱已关怀:"+data1[i].visit+"次</div>\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_4\">\n" +
+                        "\t\t\t\t\t\t小可爱叫:<span style=\"color:#05a\">"+data1[i].name+"</span><br>\n" +
+                        "\t\t\t\t\t\t小可爱在:"+data1[i].local+"<br>\n" +
+                        "\t\t\t\t\t\t小可爱的关怀模板为:"+data1[i].moduleName+"<br>\n" +
+                        "\t\t\t\t\t\t小可爱的关怀状态:"+data1[i].statusName+"<br>\n" +
+                        "\t\t\t\t\t\t:接受消息的手机:"+data1[i].phone+"<br>\n" +
+                        "\t\t\t\t\t\tCare-Note:有爱的人永远值得幸福！<br>\n" +
+                        "\t\t\t\t\t</div>\n" +
+                        "\t\t\t\t</div>\n" +
+                        "\t\t\t\t<hr>\n" +
+                        "\t\t\t\t<div class=\"item_content_bottom\">\n" +
+                        "\t\t\t\t\t<a href=\"/user/setting/"+data1[i].id+"\">修改此可爱</a>\n" +
+                        "\t\t\t\t\t<a type=\"button\" onclick='deleteByID("+data1[i].id+")'>删除此可爱</a>\n" +
+                        "\t\t\t\t</div>\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t</div>";
+                    $("#dataTable1").append(item);
+                }
+            }
+            var data2 = data.data.stopSetting;
+            if (data2!=null) {
+                $("#dataTable2").html("");
+                for (i = 0; i < data2.length; i++) {
+                    var item = "<div class=\"item\">\n" +
+                        "\t\t\t<div class=\"imte_top\"><span>"+time+"</span></div>\n" +
+                        "\t\t\t<div class=\"item_content\">\n" +
+                        "\t\t\t\t<div class=\"item_content_top\">\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_1\">您默默关心的对象！</div>\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_2\">"+time+"</div>\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_3\">此可爱已关怀:"+data2[i].visit+"次</div>\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_4\">\n" +
+                        "\t\t\t\t\t\t小可爱叫:<span style=\"color:#05a\">"+data2[i].name+"</span><br>\n" +
+                        "\t\t\t\t\t\t小可爱在:"+data2[i].local+"<br>\n" +
+                        "\t\t\t\t\t\t小可爱的关怀模板为:"+data2[i].moduleName+"<br>\n" +
+                        "\t\t\t\t\t\t小可爱的关怀状态:"+data2[i].statusName+"<br>\n" +
+                        "\t\t\t\t\t\t:接受消息的手机:"+data2[i].phone+"<br>\n" +
+                        "\t\t\t\t\t\tCare-Note:最长情的告白是陪伴！<br>\n" +
+                        "\t\t\t\t\t</div>\n" +
+                        "\t\t\t\t</div>\n" +
+                        "\t\t\t\t<hr>\n" +
+                        "\t\t\t\t<div class=\"item_content_bottom\">\n" +
+                        "\t\t\t\t\t<a href=\"/user/setting/"+data2[i].id+"\">修改此可爱</a>\n" +
+                        "\t\t\t\t\t<a type=\"button\" onclick='deleteByID("+data2[i].id+")'>删除此可爱</a>\n" +
+                        "\t\t\t\t</div>\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t</div>";
+                    $("#dataTable2").append(item);
+                }
+            }
+        });
+    });
+
+</script>
+</html>

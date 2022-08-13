@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CareNote-Module</title>
+    <link rel="shortcut icon" href="http://jimo.fun/img/my/jm.png"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <style type="text/css">
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: #eeeeee;
+            font-family: "楷体";
+        }
+        .item{
+            margin: 20px;
+            margin-bottom: 50px;
+        }
+        .imte_top{
+            text-align: center;
+        }
+        .imte_top>span{
+            font-size:14px;
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: #ddd;
+            color:#fff;
+            border-radius: 5px;
+        }
+        .item_content{
+            background-color: #fff;
+            padding: 25px 15px;
+            margin-top: 6px;
+        }
+        .item_content_top_1{
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .item_content_top_2{
+            color:#eee;
+            font-size: 14px;
+            margin: 5px 0px;
+        }
+        .item_content_top_3{
+            margin: 10px 0px;
+        }
+        .item_content_top_4{
+            margin: 10px 0px;
+        }
+        .item_content_bottom>a{
+            text-decoration: none;
+            color:#33e;
+        }
+    </style>
+</head>
+<style>
+    .submitBtn {
+        width: 90%;
+        margin: 0 auto;
+        text-align: center;
+        line-height: 46px;
+        border-radius: 23px;
+        background: #1f72ff;
+        color: #fff;
+        font-weight: bolder;
+    }
+</style>
+<body>
+<br>
+<a href="/user/module/post"><div class="submitBtn" >上传模板信息</div></a>
+<div class="content" id="dataTable1">
+    <h1 align="center">您的专属模板查无记录！！！</h1>
+</div>
+<div class="content" id="dataTable2">
+    <h1 align="center" >公开模板空空如也~~~~</h1>
+</div>
+
+</body>
+<script src="../../../static/js/jquery.min.js"></script>
+<script src="../../../static/layer/layer.js"></script>
+<script>
+    function al(){
+        layer.msg("公开模板禁止此操作！有疑问可联系管理员！");
+    }
+    function deleteByID(id) {
+        layer.confirm("请您谨慎操作！确定要删除模板码？",
+            {btn:['我意已决','再想想吧']},function () {
+                $.post("/user/module/delete/" + id, null, function (date) {
+                    layer.msg(date.result);
+                });
+            },function () {
+                layer.msg("已取消！辛亏我拦住您了");
+            }
+        );
+    }
+    $(function () {
+        $.post("/user/module",null,function (data) {
+            if (data.status!=200){
+                layer.msg("信息刷新失败，请您重试！")
+                return;
+            }
+            let time = new Date();
+            var data1 = data.data.privateMoules;
+            if (data1!=null){
+                $("#dataTable1").html("");
+                for (i=0;i<data1.length;i++){
+                    var item = "<div class=\"item\">\n" +
+                        "\t\t\t<div class=\"imte_top\"><span>"+time+"</span></div>\n" +
+                        "\t\t\t<div class=\"item_content\">\n" +
+                        "\t\t\t\t<div class=\"item_content_top\">\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_1\">您的专属模板！</div>\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_2\">查询时间:"+time+"</div>\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_3\">此模板已经使用:"+data1[i].visit+"</div>\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_4\">\n" +
+                        "\t\t\t\t\t\t模板名字:<span style=\"color:#05a\">"+data1[i].name+"</span><br>\n" +
+                        "\t\t\t\t\t\t天气参数:"+data1[i].status+"<br>\n" +
+                        "\t\t\t\t\t\t温度参数:"+data1[i].temp+"<br>\n" +
+                        "\t\t\t\t\t\t:早安信息:"+data1[i].morning+"<br>\n" +
+                        "\t\t\t\t\t\t午安信息:"+data1[i].noon+"<br>\n" +
+                        "\t\t\t\t\t\t晚安信息:"+data1[i].evening+"<br>\n" +
+                        "\t\t\t\t\t</div>\n" +
+                        "\t\t\t\t</div>\n" +
+                        "\t\t\t\t<hr>\n" +
+                        "\t\t\t\t<div class=\"item_content_bottom\">\n" +
+                        "\t\t\t\t\t<a href=\"/user/module/"+data1[i].id+"\">修改该模板</a>\n" +
+                        "\t\t\t\t\t<a type=\"button\" onclick='deleteByID("+data1[i].id+")'>删除该模板</a>\n" +
+                        "\t\t\t\t</div>\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t</div>";
+                    $("#dataTable1").append(item);
+                }
+            }
+            var data2 = data.data.publicMoules;
+            if (data2!=null) {
+                $("#dataTable2").html("");
+                for (i = 0; i < data2.length; i++) {
+                    var item = "<div class=\"item\">\n" +
+                        "\t\t\t<div class=\"imte_top\"><span>"+time+"</span></div>\n" +
+                        "\t\t\t<div class=\"item_content\">\n" +
+                        "\t\t\t\t<div class=\"item_content_top\">\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_1\">公开共享模板！</div>\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_2\">查询时间:"+time+"</div>\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_3\">此模板已经使用:"+data2[i].visit+"</div>\n" +
+                        "\t\t\t\t\t<div class=\"item_content_top_4\">\n" +
+                        "\t\t\t\t\t\t模板名字:<span style=\"color:#05a\">"+data2[i].name+"</span><br>\n" +
+                        "\t\t\t\t\t\t天气参数:"+data2[i].status+"<br>\n" +
+                        "\t\t\t\t\t\t温度参数:"+data2[i].temp+"<br>\n" +
+                        "\t\t\t\t\t\t:早安信息:"+data2[i].morning+"<br>\n" +
+                        "\t\t\t\t\t\t午安信息:"+data2[i].noon+"<br>\n" +
+                        "\t\t\t\t\t\t晚安信息:"+data2[i].evening+"<br>\n" +
+                        "\t\t\t\t\t</div>\n" +
+                        "\t\t\t\t</div>\n" +
+                        "\t\t\t\t<hr>\n" +
+                        "\t\t\t\t<div class=\"item_content_bottom\">\n" +
+                        "\t\t\t\t\t<a onclick='al()'>修改模板</a>\n" +
+                        "\t\t\t\t\t<a onclick='al()'>删除模板</a>\n" +
+                        "\t\t\t\t</div>\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t</div>";
+                    $("#dataTable2").append(item);
+                }
+            }
+        });
+    });
+</script>
+</html>

@@ -798,18 +798,18 @@ function init_myChart5(XData,yData) {
 
 
 function init_myChart6() {
-    $.ajax({
-        type: "GET",
-        url: "/num/log/map",
-        async: true,
-        dataType: "json",
-        contentType: "application/json; charset=UTF-8",
-        data: null,
-        success: function (result) {
-            //绑定数据
-            Logcount = result;
-        }
-    });
+    // $.ajax({
+    //     type: "GET",
+    //     url: "/num/log/map",
+    //     async: true,
+    //     dataType: "json",
+    //     contentType: "application/json; charset=UTF-8",
+    //     data: null,
+    //     success: function (result) {
+    //         //绑定数据
+    //         Logcount = result;
+    //     }
+    // });
     var data = {
         "uploadData": [{"count": 5421, "areaName": "JIMO"}, {"count": 6512, "areaName": "FUJIE"}, {
             "count": 3721,
@@ -1003,18 +1003,18 @@ function init_myChart6() {
 }
 
 function init_myChart7() {
-    $.ajax({
-        type: "GET",
-        url: "/num/module",
-        async: true,
-        dataType: "json",
-        contentType: "application/json; charset=UTF-8",
-        data: null,
-        success: function (result) {
-            //绑定数据
-            Logcount = result;
-        }
-    });
+    // $.ajax({
+    //     type: "GET",
+    //     url: "/num/module",
+    //     async: true,
+    //     dataType: "json",
+    //     contentType: "application/json; charset=UTF-8",
+    //     data: null,
+    //     success: function (result) {
+    //         //绑定数据
+    //         Logcount = result;
+    //     }
+    // });
 
     var colorList = [
         '#ff2600',

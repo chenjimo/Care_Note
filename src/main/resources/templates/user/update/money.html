@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html xmlns:font-size="http://www.w3.org/1999/xhtml" xmlns:linear-gradient>
+<head>
+    <title>CareNOte-Money</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link href="../../../static/css/normalize.css" type="text/css" rel="stylesheet"/>
+    <link href="../../../static/css/common.css" type="text/css" rel="stylesheet"/>
+    <script src="../../../static/js/jquery.min.js" type="text/javascript"></script>
+    <script src="../../../static/js/notice.js" type="text/javascript"></script>
+    <script src="../../../static/js/common.js" type="text/javascript"></script>
+    <script src="../../../static/js/regexp.js" type="text/javascript"></script>
+    <script src="../../../static/layer/layer.js"></script>
+    <style type="text/css">
+        .userInfoEditCont {
+            width: 100%;
+        }
+
+        .userInfoEditCont .userInfoIcon {
+            width: 20%;
+            margin: 0px auto 10px;
+        }
+
+        .userInfoEditCont .nickName {
+            font-size: 14px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* -----  cover ----- */
+        #coverCont {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        .userTypeCont {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 1001;
+            width: 80%;
+            background: #f4f4f4;
+            border: 1px solid #f1f1f1;
+            border-radius: 5px;
+            padding: 20px 0px 30px;
+            display: none;
+        }
+
+        .userTypeCont .userTypeTitle {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 0px;
+        }
+
+        .userTypeCont .userType {
+            width: 90%;
+            margin: 5px auto;
+            overflow: hidden;
+        }
+
+        .userTypeCont .userType .teacherType {
+            width: 45%;
+            padding: 10px 2%;
+            float: left;
+            border: 1px solid #f1f1f1;
+            background: #fff;
+        }
+
+        .userTypeCont .userType .studentType {
+            width: 45%;
+            padding: 10px 2%;
+            float: right;
+            border: 1px solid #f1f1f1;
+            background: #fff;
+        }
+
+        .userType .typeImg {
+            width: 50%;
+            margin: 0px auto 5px;
+        }
+
+        .userType .typeTitle {
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        .userType .typeDesc {
+            font-size: 12px;
+            color: #888888;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .submitBtn {
+            width: 90%;
+            margin: 0 auto 20px;
+            text-align: center;
+            line-height: 46px;
+            border-radius: 23px;
+            background: #888888;
+            color: #fff;
+            font-weight: bolder;
+        }
+
+        .userSelectCont {
+            width: 100%;
+            background: #fff;
+            font-size: 14px;
+            overflow: hidden;
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+            display: none;
+            z-index: 999;
+        }
+
+        .userSelectCont .userSelectTitle {
+            width: 90%;
+            padding: 0px 5%;
+            background: #fff;
+            overflow: hidden;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .userSelectCont .userSelectTitle .selectCancelBtn {
+            float: left;
+            color: #1f72ff;
+            font-weight: bold;
+            line-height: 35px;
+        }
+
+        .userSelectCont .userSelectTitle .selectOkBtn {
+            float: right;
+            color: #1f72ff;
+            font-weight: bold;
+            line-height: 35px;
+        }
+
+        .userSelectCont .selectNumCont {
+            width: 90%;
+            padding: 0px 5%;
+        }
+
+        .userSelectCont .selectNumCont .selectNum {
+            overflow: hidden;
+            padding: 10px 0px;
+        }
+
+        .userSelectCont .selectNumCont .selectNum .selectTitle {
+            float: left;
+            width: 100px;
+        }
+
+        .userSelectCont .selectNumCont .selectNum .selectNumDiv {
+            float: left;
+            width: calc(100% - 100px);
+        }
+
+        .userSelectCont .selectNumCont .selectNum .selectNumDiv ul {
+            list-style: none;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .userSelectCont .selectNumCont .selectNum .selectNumDiv ul li {
+            float: left;
+            width: 24%;
+            margin: 0px 0px 5px 1%;
+            text-align: center;
+            line-height: 25px;
+        }
+
+        .selectNum .selectNumDiv ul li.unselect {
+            background: #f1f1f1;
+            color: #000;
+        }
+
+        .selectNum .selectNumDiv ul li.select {
+            background: #1f72ff;
+            color: #fff;
+        }
+
+        .userNewPhoneDiv {
+            display: none;
+        }
+
+        .gapText {
+            text-align: center;
+            font-size: 14px;
+            color: #888888;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="headerNav">
+        <div class="headerNavTop">
+            <div class="headerNavIcon headerNavIconOut"><span></span><span></span></div>
+        </div>
+        <div class="headerNavCont">
+            <a href="/user/console">用户首页</a>
+            <a href="/user/my">个人中心</a>
+            <a href="/user/module">模板信息</a>
+            <a href="/user/setting">关怀信息</a>
+            <a href="/jimo.fun">JIMO友情🔗</a>
+        </div>
+    </div>
+
+    <div class="userInfoEditCont">
+        <div class="userInfoIcon">
+            <img src="../../../static/img/money.png" width="100%">
+        </div>
+        <div class="nickName" id="username">用户姓名</div>
+        <div class="nickName" id="money">余额：1314元</div>
+
+        <form>
+            <input id="PageContext" type="hidden" value="${pageContext.request.contextPath}"/>
+            <input id="wxCode" type="hidden" value="${wxCode}"/>
+            <input type="hidden" id="userId" name="userId" value="${sysWxUser.id}">
+            <div class="userInputCont">
+                    <img src="../../../static/img/sk.jpg" style="margin: 0 auto" width="66%">
+                <div class="inputTypeCont">
+                    <div class="inputTitle">留言</div>
+                    <input type="text" class="commonInput"  id="msg" placeholder="充值留言eg；我冲了十元(支付宝)按次来，大佬送点次数呗！">
+                </div>
+                <div class="inputTypeCont">
+                    <div class="inputTitle">金额</div>
+                    <label for="money"></label><select id="chong" >
+                    <option value="按次冲（一元十次）最低一元">按次冲（一元十次）最低一元</option>
+                    <option value="包季（20元/270次）">包季（20元/270次）</option>
+                    <option value="包月（8元/90次）">包月（8元/90次）</option>
+                </select>
+                </div>
+            </div>
+        </form>
+        <div class="userInfoIcon">
+            <img src="../../../static/img/chong.png" width="100%">
+        </div>
+        <div class="submitBtn" onclick="sendMessage1()"><p style="font-size: 14px;background: linear-gradient(to right, red, blue);-webkit-background-clip: text;color: transparent;">付完钱请在一分钟内点这里，提醒管理员处理！</p></div>
+    </div>
+    <p><a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=RS8sKCoyKjcpIQU0NGsmKig" style="text-decoration:none;"><img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_02.png"/></a> <a href="https://wpa.qq.com/msgrd?v=3&uin=1517962688&site=qq&menu=yes" target="_blank" style="font-size: 17px;background: linear-gradient(to right, red, blue);-webkit-background-clip: text;color: transparent;"><img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_12.png"/></a></p>
+</div>
+</body>
+<script>
+    var count = 30;
+
+    function sendMessage1() {
+        var msg = $.trim($("#msg").val());
+        var chong = $.trim($("#chong").val());
+        if (msg===""||msg.length===0||chong===""||chong.length===0){
+            layer.msg("感谢您的支持，但信息不能为空！")
+        }
+        curCount1 = count;
+        $("#btnSendCode1").attr("disabled", "true");
+        InterValObj1 = window.setInterval(SetRemainTime1, 1000);
+        //发送短信
+        let load = layer.load();
+        $.post("/user/money", {msg:msg,money:chong}, function (data) {
+            layer.close(load);
+            layer.msg(data.result+"请勿重复操作！");
+        });
+    }
+
+    function SetRemainTime1() {
+        if (curCount1 == 0) {
+            window.clearInterval(InterValObj1);
+            $("#btnSendCode1").removeAttr("disabled");
+            $("#btnSendCode1").val("重新发送");
+        } else {
+            curCount1--;
+            $("#btnSendCode1").val(+curCount1 + "秒再获取");
+        }
+    }
+
+$(function () {
+    //获取原始用户信息
+    $.getJSON("/user/message",null,function (data) {
+        if (data.status==200){
+            $("#username").html(data.data.name);
+            $("#money").html("您的余额："+data.data.money+"次");
+            layer.msg("尊敬的会员用户:'"+data.data.name+"支付目前仅支持手动！");
+        }else {
+            layer.msg(data.data.phone+"加载信息失败！请刷新重试！");
+        }
+    });
+});
+</script>
+</html>

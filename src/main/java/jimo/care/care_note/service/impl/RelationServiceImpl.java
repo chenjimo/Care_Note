@@ -65,4 +65,22 @@ public class RelationServiceImpl extends ServiceImpl<RelationMapper, Relation> i
     public Page<Relation> AdminGetRelations(Page<Relation> page, QueryWrapper<Relation> queryWrapper) {
         return page==null?new Page<Relation>().setRecords(baseMapper.selectList(queryWrapper)):baseMapper.selectPage(page,queryWrapper);
     }
+
+    /***
+     * 获取绑定数目
+     * @param queryWrapper
+     */
+    @Override
+    public Integer getCount(QueryWrapper queryWrapper) {
+        return baseMapper.selectCount(queryWrapper);
+    }
+
+    /***
+     * 由对象ID查全部关联信息
+     * @param sID
+     */
+    @Override
+    public Relation getRelation(Integer sID) {
+        return baseMapper.selectOne(Wrappers.<Relation>query().eq("s_id",sID));
+    }
 }

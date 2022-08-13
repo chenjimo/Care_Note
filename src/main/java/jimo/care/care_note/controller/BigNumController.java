@@ -213,10 +213,15 @@ public class BigNumController {
         );
         return localInfos;
     }
+
+    /***
+     * @return 处理页面访问的大数据
+     * orderByDesc("visit").last("limit 0,10") 仅取最热的十个页面！
+     */
     @GetMapping("/pages")
    public List<LocalInfo> getPages(){
         List<LocalInfo> list = new ArrayList<>();
-        pageService.getPageList(null,Wrappers.<jimo.care.care_note.bean.Page>query().select("visit","name")).getRecords()
+        pageService.getPageList(null,Wrappers.<jimo.care.care_note.bean.Page>query().select("visit","name").orderByDesc("visit").last("limit 0,10")).getRecords()
                 .forEach(page ->list.add(new LocalInfo(page.getName(),page.getVisit())));
         return list;
    }

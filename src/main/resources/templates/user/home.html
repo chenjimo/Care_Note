@@ -5,64 +5,255 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Care-Note</title>
-    <link rel="shortcut icon" href="http://jimo.fun/img/my/jm.png" />
+    <link rel="shortcut icon" href="http://jimo.fun/img/my/jm.png"/>
     <link rel="stylesheet" href="../../static/user/home/css/all.min.css">
     <link rel="stylesheet" href="../../static/user/home/css/style.css">
 </head>
+<style type="text/css">
 
+</style>
 <body>
-    <div id="dowebok">
-        <div id="navbar">
-            <div id="bubbleWrapper">
-                <div id="bubble1" class="bubble">
-                    <span class="icon"><i class="fas fa-home"></i></span>
-                </div>
-                <div id="bubble2" class="bubble">
-                    <span class="icon"><i class="fab fa-twitter"></i></span>
-                </div>
-                <div id="bubble3" class="bubble">
-                    <span class="icon"><i class="fas fa-bell"></i></span>
-                </div>
-                <div id="bubble4" class="bubble">
-                    <span class="icon"><i class="fas fa-user"></i></span>
-                </div>
+<div class="box"></div>
+<!--https://www.w3school.com.cn/cssref/css_units.asp单位参考-->
+<div id="htmlBody" >
+    <iframe class="health" src="/user/console"></iframe>
+</div>
+<div id="dowebok">
+    <div id="navbar">
+        <div id="bubbleWrapper">
+            <div id="bubble1" class="bubble">
+                <span class="icon"><i class="fas fa-home"></i></span>
             </div>
-            <div id="menuWrapper">
-                <div id="menu1" class="menuElement" onclick="move('1', '12.5%', '#ffcc80')">
-                    <i class="fas fa-home"></i>
-                </div>
-                <div id="menu2" class="menuElement" onclick="move('2', '37.5%', '#81d4fa')">
-                    <i class="fab fa-twitter"></i>
-                </div>
-                <div id="menu3" class="menuElement" onclick="move('3', '62.5%', '#c5e1a5')">
-                    <i class="fas fa-bell"></i>
-                </div>
-                <div id="menu4" class="menuElement" onclick="move('4', '87.5%', '#ce93d8')">
-                    <i class="fas fa-user"></i>
-                </div>
+            <div id="bubble2" class="bubble">
+                <span class="icon"><i class="fab fa-twitter"></i></span>
+            </div>
+            <div id="bubble3" class="bubble">
+                <span class="icon"><i class="fas fa-bell"></i></span>
+            </div>
+            <div id="bubble4" class="bubble">
+                <span class="icon"><i class="fas fa-user"></i></span>
             </div>
         </div>
-        <div id="bgWrapper">
-
-            <div id="bg" >
-
+        <div id="menuWrapper">
+            <div id="menu1" class="menuElement" onclick="move('1', '12.5%', '#ffcc80')">
+                <i class="fas fa-home"></i>
             </div>
-            <div id="bgBubble"></div>
+            <div id="menu2" class="menuElement" onclick="move('2', '37.5%', '#81d4fa')">
+                <i class="fab fa-twitter"></i>
+            </div>
+            <div id="menu3" class="menuElement" onclick="move('3', '62.5%', '#c5e1a5')">
+                <i class="fas fa-bell"></i>
+            </div>
+            <div id="menu4" class="menuElement" onclick="move('4', '87.5%', '#ce93d8')">
+                <i class="fas fa-user"></i>
+            </div>
         </div>
     </div>
+    <div id="bgWrapper">
 
-    <svg width="0" height="0">
-        <defs>
-            <filter id="goo">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur" id="blurFilter" />
-                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 30 -15"
-                    result="goo" />
-                <feComposite in="SourceGraphic" in2="goo" operator="atop" />
-            </filter>
-        </defs>
-    </svg>
+        <div id="bg">
 
-    <script src="../../static/user/home/js/gsap.min.js"></script>
-    <script src="../../static/user/home/js/script.js"></script>
+        </div>
+        <div id="bgBubble"></div>
+    </div>
+</div>
+<svg width="0" height="0">
+    <defs>
+        <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur" id="blurFilter"/>
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 30 -15"
+                           result="goo"/>
+            <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+        </filter>
+    </defs>
+</svg>
+<div class="snow-container"></div>
+
+<script src="../../static/admin/login/js/jquery-2.1.1.min.js"></script>
+<script src="../../static/user/home/js/gsap.min.js"></script>
+<script src="../../static/user/home/js/script.js"></script>
+<script type="text/javascript" src="../../static/js/three.js"></script>
 </body>
+<script type="text/javascript">
+    /*class='health' 是专门针对流动页面的约束*/
+    $(function () {
+        /*单击图标或刷新看到的是回复的背景页面*/
+        /*初始化数据*/
+        $("#bubble1").click(function () {
+            $("#htmlBody").fadeToggle("slow");
+        });
+        $("#menu1").click(function () {
+            change("/user/console")
+        });
+        $("#bubble2").click(function () {
+            shou();
+        });
+        $("#bubble3").click(function () {
+            shou();
+        });
+        $("#bubble4").click(function () {
+            shou();
+        });
+        /*点击图标进入的是菜单*/
+        $("#menu2").click(function () {
+            change("/user/setting");
+        });
+        $("#menu3").click(function () {
+            change("/user/module");
+        });
+        $("#menu4").click(function () {
+            change("/user/my");
+        });
+       /*闪现的刷新效果*/
+        function shou() {
+            $("#htmlBody").fadeToggle("slow");
+            $("#htmlBody").fadeToggle("slow");
+        }
+        /*页面切换的润滑效果*/
+        function change(url) {
+            $("#htmlBody").fadeToggle("slow");
+            $("#htmlBody").html(" <iframe class=\"health\" src='"+url+"'></iframe>");
+            $("#htmlBody").fadeToggle("slow");
+        }
+    })
+</script>
+<script type="text/javascript">
+    function randomRange(t, i) {
+        return Math.random() * (i - t) + t
+    }
+
+    Particle3D = function (t) {
+        THREE.Particle.call(this, t), this.velocity = new THREE.Vector3(0, -2, 0), this.velocity.rotateX(randomRange(-
+            45, 45)), this.velocity.rotateY(randomRange(0, 360)), this.gravity = new THREE.Vector3(0, 0, 0), this
+            .drag = 1
+    }, Particle3D.prototype = new THREE.Particle, Particle3D.prototype.constructor = Particle3D, Particle3D.prototype
+        .updatePhysics = function () {
+        this.velocity.multiplyScalar(this.drag), this.velocity.addSelf(this.gravity), this.position.addSelf(this
+            .velocity)
+    };
+    var TO_RADIANS = Math.PI / 180;
+    THREE.Vector3.prototype.rotateY = function (t) {
+        cosRY = Math.cos(t * TO_RADIANS), sinRY = Math.sin(t * TO_RADIANS);
+        var i = this.z,
+            o = this.x;
+        this.x = o * cosRY + i * sinRY, this.z = o * -sinRY + i * cosRY
+    }, THREE.Vector3.prototype.rotateX = function (t) {
+        cosRY = Math.cos(t * TO_RADIANS), sinRY = Math.sin(t * TO_RADIANS);
+        var i = this.z,
+            o = this.y;
+        this.y = o * cosRY + i * sinRY, this.z = o * -sinRY + i * cosRY
+    }, THREE.Vector3.prototype.rotateZ = function (t) {
+        cosRY = Math.cos(t * TO_RADIANS), sinRY = Math.sin(t * TO_RADIANS);
+        var i = this.x,
+            o = this.y;
+        this.y = o * cosRY + i * sinRY, this.x = o * -sinRY + i * cosRY
+    };
+    $(function () {
+        var container = document.querySelector(".snow-container");
+        if (/MSIE 6|MSIE 7|MSIE 8/.test(navigator.userAgent)) {
+            return
+        } else {
+            if (/MSIE 9|MSIE 10/.test(navigator.userAgent)) {
+                $(container).css("height", $(window).height()).bind("click", function () {
+                    $(this).fadeOut(1000, function () {
+                        $(this).remove()
+                    })
+                })
+            }
+        }
+        var containerWidth = $(container).width();
+        var containerHeight = $(container).height();
+        var particle;
+        var camera;
+        var scene;
+        var renderer;
+        var mouseX = 0;
+        var mouseY = 0;
+        var windowHalfX = window.innerWidth / 2;
+        var windowHalfY = window.innerHeight / 2;
+        var particles = [];
+        var particleImage = new Image();
+        particleImage.src = "../../static/img/snow.png";
+        var snowNum = 500;
+
+        function init() {
+            camera = new THREE.PerspectiveCamera(75, containerWidth / containerHeight, 1, 10000);
+            camera.position.z = 100;
+            scene = new THREE.Scene();
+            scene.add(camera);
+            renderer = new THREE.CanvasRenderer();
+            renderer.setSize(containerWidth, containerHeight);
+            var material = new THREE.ParticleBasicMaterial({
+                map: new THREE.Texture(particleImage)
+            });
+            for (var i = 0; i < snowNum; i++) {
+                particle = new Particle3D(material);
+                particle.position.x = Math.random() * 2000 - 1000;
+                particle.position.y = Math.random() * 2000 - 1000;
+                particle.position.z = Math.random() * 2000 - 1000;
+                particle.scale.x = particle.scale.y = 1;
+                scene.add(particle);
+                particles.push(particle)
+            }
+            container.appendChild(renderer.domElement);
+            document.addEventListener("mousemove", onDocumentMouseMove, false);
+            document.addEventListener("touchstart", onDocumentTouchStart, false);
+            document.addEventListener("touchmove", onDocumentTouchMove, false);
+            setInterval(loop, 1000 / 40)
+        }
+
+        function onDocumentMouseMove(event) {
+            mouseX = event.clientX - windowHalfX;
+            mouseY = event.clientY - windowHalfY
+        }
+
+        function onDocumentTouchStart(event) {
+            if (event.touches.length == 1) {
+                event.preventDefault();
+                mouseX = event.touches[0].pageX - windowHalfX;
+                mouseY = event.touches[0].pageY - windowHalfY
+            }
+        }
+
+        function onDocumentTouchMove(event) {
+            if (event.touches.length == 1) {
+                event.preventDefault();
+                mouseX = event.touches[0].pageX - windowHalfX;
+                mouseY = event.touches[0].pageY - windowHalfY
+            }
+        }
+
+        function loop() {
+            for (var i = 0; i < particles.length; i++) {
+                var particle = particles[i];
+                particle.updatePhysics();
+                with (particle.position) {
+                    if (y < -1000) {
+                        y += 2000
+                    }
+                    if (x > 1000) {
+                        x -= 2000
+                    } else {
+                        if (x < -1000) {
+                            x += 2000
+                        }
+                    }
+                    if (z > 1000) {
+                        z -= 2000
+                    } else {
+                        if (z < -1000) {
+                            z += 2000
+                        }
+                    }
+                }
+            }
+            camera.position.x += (mouseX - camera.position.x) * 0.005;
+            camera.position.y += (-mouseY - camera.position.y) * 0.005;
+            camera.lookAt(scene.position);
+            renderer.render(scene, camera)
+        }
+
+        init()
+    });
+</script>
 </html>
