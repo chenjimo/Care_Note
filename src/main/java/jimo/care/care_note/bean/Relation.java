@@ -1,10 +1,11 @@
 package jimo.care.care_note.bean;
 
-import java.io.Serializable;
-
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -24,7 +25,12 @@ public class Relation implements Serializable {
     private Integer sId;
 
     private Integer mId;
-
+    @TableField(exist = false)
+    private String userName;
+    @TableField(exist = false)
+    private String settingName;
+    @TableField(exist = false)
+    private String moduleName;
     public Relation() {
     }
 

@@ -9,7 +9,7 @@
     <meta name="description" content="Adding elasticity with SVG shape animations"/>
     <meta name="keywords" content="svg, morph, snap.svg, effect, animation, css, shape"/>
     <meta name="author" content="Codrops"/>
-    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="shortcut icon" href="../../static/img/images/favicon.ico">
     <link rel="stylesheet" type="text/css" href="../../static/admin/home/css/normalize.css"/>
     <link rel="stylesheet" type="text/css"
           href="../../static/admin/home/fonts/font-awesome-4.2.0/css/font-awesome.min.css"/>
@@ -21,6 +21,7 @@
     <![endif]-->
 </head>
 <style>
+
     body {
         background: radial-gradient(200% 100% at bottom center, #f7f7b6, #e96f92, #75517d, #1b2947);
         background: radial-gradient(220% 105% at top center, #1b2947 10%, #75517d 40%, #e96f92 65%, #f7f7b6);
@@ -94,16 +95,56 @@
     }
 
 </style>
+<style>
+    .test {
+        width   : 100%;
+        height  : 90vh;
+        overflow: auto;
+        float   : left;
+        margin  : 5px;
+        border  : none;
+    }
+    .test-5::-webkit-scrollbar {
+        /*滚动条整体样式*/
+        width : 10px;  /*高宽分别对应横竖滚动条的尺寸*/
+        height: 1px;
+    }
+    .test-5::-webkit-scrollbar-thumb {
+        /*滚动条里面小方块*/
+        border-radius   : 10px;
+        background-color: skyblue;
+        background-image: -webkit-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.2) 75%,
+                transparent 75%,
+                transparent
+        );
+    }
+    .test-5::-webkit-scrollbar-track {
+        /*滚动条里面轨道*/
+        box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+        background   : #ededed;
+        border-radius: 10px;
+    }
+</style>
 <body>
 <!--背景效果-->
-<div class="stars"></div>
+<div class="stars" ></div>
 <!--<div class="image" ></div>-->
-<nav id="menu" class="menu">
+<nav id="menu" class="menu" >
     <button class="menu__handle"><span>Menu</span></button>
-    <div class="menu__inner">
+    <div class="menu__inner test test-5" style="overflow-y:auto;">
+        <ul id="menuState">
+            <li><a onclick="change('/jimo.cn')"><span><p align=center><font size='5'>JIMO主页<span></font></p></a></li>
+            <li><a onclick="change('/')"><span><p align=center><font size='4'>Care-Note大数据！<span></font></p></a></li>
+            <li><a onclick="change('/user')"><span><p align=center><font size='4'>Care-Note用户页面<span></font></p></a></li>
+        </ul>
         <ul>
-            <li><a href="/login/admin"><span><p align=center><font size='5'>重新登录！<span></font></p></a></li>
-            <li><a href="/user"><span><p align=center><font size='5'>用户页面<span></font></p></a></li>
+            <li><a onclick="change('/login/admin')"><span><p align=center><font size='5'>重新登录！<span></font></p></a></li>
             <li><a id="outLogin" href="#"><span><p align=center><font size='5'>退出登录<span></p></a></li>
         </ul>
     </div>
@@ -128,15 +169,40 @@
 <!-- 动态粒子背景 <script src="../../static/admin/home/js/body-style.js"></script>-->
 <script src="../../static/admin/login/js/jquery-2.1.1.min.js"></script>
 <script src="../../static/admin/home/js/classie.js"></script>
+<script src="../../static/layer/layer.js"></script>
 <script>
     /*class='devHtml' 是专门针对流动页面的约束*/
     $(function () {
         $("#outLogin").click(function () {
-            $("#viewDiv").fadeToggle("slow");
-            $("#viewDiv").html("<iframe id=\"health\" class=\"devHtml\" src=\"login.html\" ></iframe>");
-            $("#viewDiv").fadeToggle("slow");
+            layer.confirm("💔",
+                {btn:['忍痛离开','在待会']},function () {
+                   window.location.href="/login/out";
+                },function () {
+                    layer.msg("已取消！");
+                }
+            );
         });
-    })
+        /*获取动态页面菜单*/
+        $.getJSON("/admin/menu",null,function (message) {
+            layer.msg(message.result);
+            if (message.status!==200){
+                return;
+            }
+            var p = message.data.pages;
+            for (var i = 0 ;i<p.length;i++){
+                var  item="<li><a onclick=\"change('"+p[i].url+"')\"><span><p align=center><font size='4'>"+p[i].name+"<span></font></p></a></li>"
+                $("#menuState").append(item);
+            }
+
+        })
+    });
+    /*处理也页面的展示位置*/
+    /*页面切换的润滑效果*/
+    function change(url) {
+        $("#viewDiv").fadeToggle("slow");
+        $("#viewDiv").html(" <iframe class=\"devHtml\" src='"+url+"'></iframe>");
+        $("#viewDiv").fadeToggle("slow");
+    }
 </script>
 <script>
     (function () {

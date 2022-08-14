@@ -223,7 +223,13 @@
             layer.msg("请放心使用！一切解释权均归JIMO，暂未完善！");
         });
         $("#info6").click(function () {
-            window.location.href = "/login/out";
+            layer.confirm("您确定要走吗！💔╥﹏╥...",
+                {btn:['忍痛离开','在待一会吧！']},function () {
+                    window.location.href="/login/out";
+                },function () {
+                    layer.msg("已取消！我就知道您不会抛弃我的！~~~///(^v^)\\\~~~");
+                }
+            );
         });
     });
 </script>

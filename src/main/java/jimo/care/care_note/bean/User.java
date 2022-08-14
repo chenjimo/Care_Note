@@ -1,11 +1,13 @@
 package jimo.care.care_note.bean;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -42,7 +44,12 @@ public class User implements Serializable {
     private LocalDateTime loginTime;
 
     private Integer sex;
-
+    @TableField(exist = false)
+    private List<Page> pages;
+    @TableField(exist = false)
+    private String ct;
+    @TableField(exist = false)
+    private String lt;
     public User(String name, String pwd, String email, Integer power, String phone, String bz, Integer money,Integer sex) {
         this.name = name;
         this.pwd = pwd;

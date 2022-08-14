@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CareNote-Money</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/add.css"/>
+</head>
+<style>
+    .colortxt {
+    font-size: 20px;
+    background: linear-gradient(to right, red, blue);
+    -webkit-background-clip: text;
+    color: transparent;
+}</style>
+<body>
+<div id="app"  style="text-align:center">
+    <div class="header">
+        <span class="colortxt">CareNote充值页面</span>
+    </div>
+    <div class="content" style="text-align:center">
+        <table style="text-align:center">
+            <tr>
+                <td class="text-right colortxt" >充值的邮箱</td>
+                <td class="content_right "><input id="email" class="input colortxt" placeholder="请输入邮箱！"></td>
+            </tr>
+            <tr>
+                <td class="text-right colortxt">重置金额（次数）</td>
+                <td class="content_right"><input id="money" class="input colortxt" placeholder="请输入次数"></td>
+            </tr>
+            <tr>
+                <td class="text-right colortxt">给该用户留言：</td>
+                <td class="content_right"><input id="msg" class="input colortxt" placeholder="请输入留言！"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="content_right"><span class="btn btn-info colortxt" id="add_user">立即提交</span> <span
+                        class="btn">重置</span></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script src="../../../static/js/jquery2.1.4.js"></script>
+<script src="../../../static/layer/assets/layui.all.js"></script>
+<script src="../../../static/layer/layer.js"></script>
+<script>
+    const form = layui.form, layer = layui.layer;
+</script>
+<script>
+    let emailZZ = /^[A-Za-z0-9-_\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    var intZZ= /^\d+$/;
+    $(function () {
+        $("#add_user").click(function () {
+            var email = $.trim($("#email").val());
+            var money = $.trim($("#money").val());
+            var msg = $.trim($("#msg").val());
+            if (email===""||email.length===0||money===""||money.length===0||msg===""||msg.length===0){
+                layer.msg("信息不能为空");
+                return ;
+            }
+            if (!emailZZ.test(email)){
+                layer.msg("请输入有效邮箱！");
+                return ;
+            }
+            if (!intZZ.test(money)){
+                layer.msg("Money请输入正确的正整数！");
+                return ;
+            }
+            const windowId = layer.load();
+            $.post("/admin/money", {
+                email: email, money: money, msg: msg
+            }, function (data) {
+                layer.close(windowId);
+                layer.msg(data.result);
+                if (data.status === 200) {
+                    //录入成功
+                    $(".input").val("");
+                } else {
+                    //录入失败
+                }
+            });
+            return false;
+        });
+
+
+    });
+</script>
+</body>
+</html>

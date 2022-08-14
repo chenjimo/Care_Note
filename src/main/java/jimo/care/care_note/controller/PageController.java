@@ -1,7 +1,5 @@
 package jimo.care.care_note.controller;
 
-import jimo.care.care_note.bean.User;
-import jimo.care.care_note.info.Message;
 import jimo.care.care_note.service.impl.PageServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -119,11 +117,25 @@ public class PageController {
             return new ModelAndView(pageService.getPageUrl("/user/settingUpdate", true));
         }
     }
-
     @GetMapping("/user/money")
     public ModelAndView addMoney(HttpServletRequest request) {
         return new ModelAndView(pageService.getPageUrl("/user/money", true));
     }
 
-
+    /***
+     * @param page 用于管理员的页面识图处理
+     * @return
+     */
+    @GetMapping("/admin/v/{page}")
+    public ModelAndView adminView(@PathVariable("page")String page){
+        return new ModelAndView(pageService.getPageUrl("/admin/v/"+page, true));
+    }
+    /***
+     * @param page 用于管理员的页面识图处理
+     * @return
+     */
+    @GetMapping("/admin/u/{page}")
+    public ModelAndView adminUpdate(@PathVariable("page")String page){
+        return new ModelAndView(pageService.getPageUrl("/admin/u/"+page, true));
+    }
 }

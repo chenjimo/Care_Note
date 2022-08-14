@@ -1,11 +1,12 @@
 package jimo.care.care_note.bean;
 
-import java.time.LocalDateTime;
-import java.io.Serializable;
-
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -31,6 +32,8 @@ public class Log implements Serializable {
     private Integer mId;
 
     private String status;
+    @TableField(exist = false)
+    private String time;
 
 
     public Log(Integer uId, Integer sId, Integer mId, String status) {

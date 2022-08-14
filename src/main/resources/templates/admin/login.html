@@ -157,7 +157,6 @@
     layui.use('layer', function () {
         //非空验证
         $('input[type="button"]').click(function () {
-            let load = layer.load();
             var login = $.trim($('input[name="login"]').val());
             var pwd = $.trim($('input[name="pwd"]').val());
             var code = $('input[name="code"]').val();
@@ -172,12 +171,14 @@
                     layer.msg("请输入正确的Email！");
                     return;
                 }
+                let load = layer.load();
                 //登陆
                 var JsonData = {
                     email: login,
                     pwd: pwd,
                     code: code
                 };
+
                 $.post("/login/admin", JsonData, function (data) {
                     layer.close(load);
                     if (data.status == 200) {

@@ -2,7 +2,6 @@ package jimo.care.care_note.module.ding;
 
 import com.dingtalk.api.request.OapiRobotSendRequest;
 import com.taobao.api.ApiException;
-import jimo.care.care_note.module.SendMessage;
 import jimo.care.care_note.util.CodeUtils;
 import jimo.care.care_note.util.DateUtil;
 import jimo.care.care_note.util.DingWebhook;
@@ -35,9 +34,9 @@ public class DingOrders  {
      * @return 返回标准消息格式
      */
     public String test(Map<Class, Object> map) {
-
         return null;
     }
+
 /*(｡･∀･)ﾉﾞ嗨，MAN ！ @全员
 
 有新订单了 (●ˇ∀ˇ●) -
@@ -78,6 +77,29 @@ public class DingOrders  {
                 "==此次消息防重码为："+ CodeUtils.getCode()+"==*/");
         request.setMarkdown(markdown);
         return request;
+    }
+    /***
+     * 订单完成的消息运维提醒！
+     */
+    public void orderOver(List<String> stringList) throws ApiException {
+        OapiRobotSendRequest request = new OapiRobotSendRequest();
+        request.setMsgtype("markdown");
+        OapiRobotSendRequest.Markdown markdown = new OapiRobotSendRequest.Markdown();
+        markdown.setTitle("Care-Note:我是JIMO自动运维助手 ，不服来战呀！！");
+        markdown.setText("### (｡･∀･)ﾉﾞ嗨，MAN ！ @全员\n" +
+                "> \n\n" +
+                "<span style='color:red'>有一笔资金流动请注意！ (●ˇ∀ˇ●) - </span><br><br>\n\n" +
+                "**轮班充值的操作管理员为:<span style='color:yellow'>"+stringList.get(0)+"(ID:"+stringList.get(1)+")</span>**\n\n" +
+                "<br>充值金额为:<span style='color:green'>"+stringList.get(2)+"次</span>\n\n" +
+                "操作时间：<span style='color:blue'>"+ stringList.get(3)+"</span>\n\n" +
+                "充值对象：<span style='color:blue'>"+stringList.get(4)+" </span>\n\n" +
+                "*<br><br>管理员为该用户留言:<span>"+stringList.get(5)+"</span>*\n\n" +
+                "*<br>他的其他信息:<span>"+stringList.get(6)+"</span>*\n\n" +
+                "<br><br><span style=\"font-size: 14px;background: linear-gradient(to right, red, blue);-webkit-background-clip: text;color: transparent;\"> 群里的各位运维大哥，注意吆！该订单已完成！❤🤭</span><br>" +
+                "==请勿重复处理！！！（害怕多冲了，那我们可赔了）\n\n" +
+                "==此次消息防重码为："+ CodeUtils.getCode()+"==*/");
+        request.setMarkdown(markdown);
+        dingWebhook.send(request);
     }
 
     /***
