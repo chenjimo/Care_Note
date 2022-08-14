@@ -21,14 +21,14 @@ Gitee: **[https://gitee.com/chenjimo/Care_Note](https://gitee.com/chenjimo/Care_
 ![输入图片说明](https://foruda.gitee.com/images/1660478940979033020/屏幕截图.png "屏幕截图.png")
 管理员首页： **[http://care.jimo.fun/admin](http://care.jimo.fun/admin)** 
 ![输入图片说明](https://foruda.gitee.com/images/1660479009851784570/屏幕截图.png "屏幕截图.png")
-一、功能- 更多见上边开发文档
-1.面向C端
-（1）核心功能：
+##一、功能- 更多见上边开发文档
+###1.面向C端
+####（1）核心功能：
 1.针对关怀的目标对象所在地查询一周内的天气情况！
 2.根据所在地的天气情况，程序定义关怀语句！
 3.添加自己的话语！
 4.发送短息消息！
-（2）扩展功能：
+####（2）扩展功能：
 1.海王群发关怀消息！
 2.设定每天提示上限！
 3.自动获取IP或手机号判断地址！
@@ -38,7 +38,7 @@ Gitee: **[https://gitee.com/chenjimo/Care_Note](https://gitee.com/chenjimo/Care_
 7.余额提示
 8.时间完全自定义（特殊时间倒计时提醒）
 9.女神榜、男神榜、情话榜
-2.面向B端
+##2.面向B端
 1.可控的服务者CRUD。
 2.收银按量服务（包月或买数量）。
 3.套餐选择。
@@ -47,7 +47,7 @@ Gitee: **[https://gitee.com/chenjimo/Care_Note](https://gitee.com/chenjimo/Care_
 6.异常错误QQ提示管理员！
 7.日志记录
 8.权限管理
-二、需求与设计架构
+##二、需求与设计架构
 用户管理、消息管理、消息模板、订单管理、
 新加入用户默认消息模板，添加用户判断键，未付款的用户只能享受一次发消息权力。
 订单管理简化程序的复杂度，就人工控制吧（后续有精力在完善）！
