@@ -1,17 +1,10 @@
 package jimo.care.care_note.controller;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import jimo.care.care_note.bean.User;
-import jimo.care.care_note.service.impl.UserServiceImpl;
-import jimo.care.care_note.util.JSONUtil;
+import jimo.care.care_note.info.Message;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 /**
  * <p>
@@ -22,7 +15,11 @@ import javax.annotation.Resource;
  * @since 2022-08-04
  */
 @RestController
-@RequestMapping("/care_note/l-log")
+@RequestMapping("/test")
 public class LogController {
-
+    @GetMapping("/e")
+    public Message errorTest(){
+       //测试异常使用 throw new RuntimeException("我是小可爱呀！我骚不骚@_@");
+        return new Message(200,"Success",null);
+    }
 }

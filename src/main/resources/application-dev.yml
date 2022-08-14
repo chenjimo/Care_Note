@@ -5,7 +5,8 @@ spring:
     password: care_note
     url: jdbc:mysql://ubuntu:3306/care_note?serverTimezone=UTC&useUncide=true&characterEncoding=utf-8&useSSL=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+  mvc:
+    static-path-pattern: /static/**
   #   关闭thymeleaf缓存
   thymeleaf:
     cache: false
@@ -19,8 +20,8 @@ spring:
     #根据163、qq等邮箱，更改为 smtp.163.com / smtp.qq.com
     host: XXX.qq.com
     #邮箱账号(需更改)
-    username: jimoworld@qq.com
-    password: XXXXXX #smtp开启时的邮箱密码(需更改)
+    username: XXXX@qq.com
+    password: XXXXXXXXXX #smtp开启时的邮箱密码(需更改)
     port: 465
     protocol: smtp
     default-encoding: UTF-8
@@ -29,24 +30,29 @@ spring:
       mail.smtp.socketFactory.port: 465
       mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
 
+
+
 server:
   port: 9277
 mybatis-plus:
   mapper-locations: "classpath:mapper/*.xml"
-  type-aliases-package: jimo.care.car_note.pojo
+  type-aliases-package: jimo.care.car_note.bean
   configuration:
     map-underscore-to-camel-case: true #开启驼峰命名
 jimo:
   api-util:
-    weatherURL: "https://XXXXXX.cn/hw/weather?city=" #你的天气请求API地址
-    sendURL: "https://XXXXX.cn/hw/hwSms?phoneNumber=" #你的消息发送API地址
-    stringLimit: 30 #字符长度限制
-    webhookURL: XXXXXX #你的钉钉机器人POST地址
-    webhookKey: XXXXX #你的钉钉机器人Key
+    weatherURL: "https://XXXXXXXXX/weather?city=" #天气请求API地址，需要换成您自己的！
+    sendURL: "https://XXXXXXXXXX/hwSms?phoneNumber=" #phone消息发送API地址，需要换成您自己的！
+    stringLimit: 33 #字符长度限制,jimo.care.care_note.util.LimitUtil可能数据读取不到,请手动处理或考虑用properties
+    webhookURL: https://oapi.dingtalk.com/robot/send?access_token=XXXXXXXXXXXXXXXXXXXXX&timestamp= #钉钉消息发送API地址，需要换成您自己的！
   message:
     email:
       title: "，您好！这里是JIMO-Care_Note服务自动检测提醒！\n"
       end: "<a href='http://care.jimo.fun/'><p 	style='font-size: 18px;background: linear-gradient(to right, red, blue);-webkit-background-clip: text;color: transparent;'>点击进入Care_Note了解详情,任何疑问可通过邮箱传递给我们❤谢谢配合!!!O(∩_∩)O</p></a>"
-      logo:
+      logo: http://jimo.fun/img/my/JIMOlogo01.png
     ding:
     phone:
+  name: http://care.jimo.fun/ #域名地址！
+  alter:  #这里配置是否开启异常运维提醒仅允许填true或false（建议开启true，开发期间建议关闭！）
+    ding: true
+    email: true

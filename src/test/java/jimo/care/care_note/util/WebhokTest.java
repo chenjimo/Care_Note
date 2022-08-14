@@ -17,7 +17,6 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /***
@@ -54,11 +53,11 @@ public class WebhokTest {
     }
 
     private static void sendMessageWebhook(OapiRobotSendRequest request) throws ApiException {
-        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/robot/send?access_token=290006f7f165f5dc1f505eb03f2d0c7d53b546b35eb75157f3acf9244daf9204&timestamp=" + LocalDateTime.now());
+        DingTalkClient client = new DefaultDingTalkClient("dingAPIURL换成您自己的！！！" + LocalDateTime.now());
         OapiRobotSendResponse response = client.execute(request);
     }
 
-    /* curl 'https://oapi.dingtalk.com/robot/send?access_token=290006f7f165f5dc1f505eb03f2d0c7d53b546b35eb75157f3acf9244daf9204'
+    /* curl 'robotWebhook'
 -H 'Content-Type: application/json'
 -d '{"msgtype": "markdown","markdown":
 {"content":"Care-Note:我是JIMO自动运维助手 ，不服来战呀！！

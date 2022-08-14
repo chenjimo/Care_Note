@@ -9,6 +9,7 @@ import jimo.care.care_note.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,7 +21,6 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 /**
@@ -42,6 +42,10 @@ public class SendError{
     DeveloperMessage developerMessage;
     @Resource
     DingError dingError;
+    @Value("${jimo.alter.ding}")
+    boolean dingAlter;
+    @Value("${jimo.alter.email}")
+    boolean emailAlter;
     /**
      * //表示让Spring捕获到所有抛出的SignException异常，并交由这个被注解的方法处理。
      * //表示设置状态码
@@ -61,6 +65,24 @@ public class SendError{
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
+
+        if (dingAlter){
+            dingAlter(message,localizedMessage,time,code);
+        }
+        if (emailAlter){
+            emailAlter(time,message,code);
+        }
+        return e.toString();
+    }
+
+    /***
+     * 钉钉运维异常监测提醒！！！
+     * @param message 错误信息
+     * @param localizedMessage 错误信息
+     * @param time 时间
+     * @param code 防重码
+     */
+    private void dingAlter(String message,String localizedMessage,String time,String code){
         List<String> list = new ArrayList<>();
         list.add(message);
         list.add(localizedMessage);
@@ -71,6 +93,15 @@ public class SendError{
         } catch (ApiException ex) {
             ex.printStackTrace();
         }
+    }
+
+    /***
+     * 管理员运维异常监测提醒！！！
+     * @param time 时间
+     * @param message 错误信息
+     * @param code 防重码
+     */
+    private void emailAlter(String time,String message,String code){
         List<String> stringList =new ArrayList<>();
         stringList.add(String.valueOf(UserPower.ADMIN_ALERT));
         stringList.add("CARE_NOTE_ERROR:系统级异常");
@@ -78,8 +109,5 @@ public class SendError{
                 +"\n\t<br><br>详细信息已发到钉钉维运群中:localizedMessage-请前往查看！"+
                 "\n\n<br>本次异常防重随机码："+code+"\n\n\t");
         developerMessage.text(stringList);
-
-        return e.toString();
     }
-
 }
