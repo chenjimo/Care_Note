@@ -111,7 +111,6 @@
         });
         let emailZZ = /^[A-Za-z0-9-_\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
         $("#user_update").click(function () {
-            const windowId = layer.load();
             var id = $("#id").val();
             var bz = $.trim($("#bz").val());
             var email = $.trim($("#email").val());
@@ -121,7 +120,8 @@
                 layer.msg("注意：邮箱、密码、权限均不可为空！");
                 return ;
             }
-            if (emailZZ.test(email)){
+            const windowId = layer.load();
+            if (!emailZZ.test(email)){
                 layer.msg("请输入有效邮箱！");
                 return ;
             }
