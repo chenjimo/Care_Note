@@ -3,10 +3,10 @@ package jimo.care.care_note.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jimo.care.care_note.bean.CareModule;
 import jimo.care.care_note.mapper.ModuleMapper;
 import jimo.care.care_note.service.IModuleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -121,5 +121,14 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, CareModule> imp
     @Override
     public Integer getModuleCount(QueryWrapper queryWrapper) {
         return baseMapper.selectCount(queryWrapper);
+    }
+
+    /***
+     * 由名字获取Module
+     * @param name
+     */
+    @Override
+    public CareModule getModule(String name) {
+        return baseMapper.selectOne(Wrappers.<CareModule>query().eq("name",name));
     }
 }

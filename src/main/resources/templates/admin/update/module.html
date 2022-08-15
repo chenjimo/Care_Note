@@ -16,13 +16,13 @@
 <body>
 <div id="app" class="light" style="text-align:center;">
     <div class="header">
-        <span>修改普通用户</span>
+        <span>修改模板信息</span>
     </div>
     <div class="content" >
         <table >
             <tr>
-                <td class="text-right">邮箱</td>
-                <td class="content_right"><input class="input inline-input" id="userEmail" placeholder="请输入Email"> <span
+                <td class="text-right">名字</td>
+                <td class="content_right"><input class="input inline-input" id="oldName" placeholder="请输入Email"> <span
                         class="btn btn-info" id="findByPhone">立即查找</span></td>
             </tr>
         </table>
@@ -33,41 +33,58 @@
     <div class="content" >
         <table>
             <tr>
-                <td class="text-right">该用户信息</td>
+                <td class="text-right">该模板信息</td>
                 <td class="content_right"><label>
-                    <input disabled="disabled" class="input" id="name">
                     <input readOnly="readOnly" class="input" id="id">
                 </label>
                 </td>
             </tr>
             <tr>
-                <td class="text-right">备注</td>
+                <td class="text-right">名字</td>
                 <td class="content_right"><label>
-                    <input class="input" id="bz" placeholder="请输入备注">
+                    <input class="input" id="name" placeholder="请输入名字">
                 </label></td>
             </tr>
             <tr>
-                <td class="text-right">邮箱</td>
+                <td class="text-right">天气</td>
                 <td class="content_right"><label>
-                    <input class="input" id="email" placeholder="请输入邮箱">
+                    <input class="input" id="status" placeholder="请输入天气">
                 </label></td>
             </tr>
             <tr>
-                <td class="text-right">密码</td>
+                <td class="text-right">温度</td>
                 <td class="content_right"><label>
-                    <input class="input" id="pwd" placeholder="请输入密码">
+                    <input class="input" id="temp" placeholder="请输入温度">
+                </label></td>
+            </tr>
+            <tr>
+                <td class="text-right">早安</td>
+                <td class="content_right"><label>
+                    <input class="input" id="morning" placeholder="请输入早安">
+                </label></td>
+            </tr>
+            <tr>
+                <td class="text-right">午安</td>
+                <td class="content_right"><label>
+                    <input class="input" id="noon" placeholder="请输入午安">
+                </label></td>
+            </tr>
+            <tr>
+                <td class="text-right">晚安</td>
+                <td class="content_right"><label>
+                    <input class="input" id="evening" placeholder="请输入晚安">
                 </label></td>
             </tr>
             <tr>
                 <td class="text-right">权限</td>
                 <td class="content_right"><label>
-                   <select id="power" class="input" >
-                       <option value="1">普通用户</option>
-                       <option value="2">2-级用户</option>
-                       <option value="3">接受提醒用户</option>
-                       <option value="0">停用</option>
-                       <option value="-1">删除</option>
-                       <option value="4">普通管理员</option>
+                   <select id="uId" class="input" >
+                       <option id="oldUID">原用户ID</option>
+                       <option value="-3">停用</option>
+                       <option value="-4">删除</option>
+                       <option value="-2">女性模板</option>
+                       <option value="-1">男性模板</option>
+                       <option value="0">中性模板</option>
                    </select>
                 </label></td>
             </tr>
@@ -88,50 +105,48 @@
     let userId = null;
     $(function () {
         $("#findByPhone").click(function () {
-            const uEmail = $.trim($("#userEmail").val());
-            if (uEmail===""||uEmail.length===0){
+            const oldName = $.trim($("#oldName").val());
+            if (oldName===""||oldName.length===0){
                 layer.msg("查询信息不能为空！");
                 return;
             }
             const windowId = layer.load();
-            $.getJSON("/admin/user", {email: uEmail}, function (data) {
+            $.getJSON("/admin/module", {name: oldName}, function (data) {
                 layer.close(windowId);
                 //data:{"status":0,"result":"查询成功","data":{"id":2,"number":"124","username":"张三","userPhone":"13843838438","company":"京东快递","code":"213456","inTime":"Jul 21, 2020, 4:26:21 PM","status":0,"sysPhone":"18888888888"}}
                 layer.msg(data.result);
                 if (data.status === 200) {
                     $(".header:eq(1),.content:eq(1)").fadeIn(1000);
-                    var u = data.data;
-                    $("#name").val(u.name);
-                    $("#id").val(u.id);
-                    $("#bz").val(u.bz);
-                    $("#email").val(u.email);
-                    $("#pwd").val(u.pwd);
-                    $("#power").val(u.power);
+                    var m = data.data;
+                    $("#name").val(m.name);
+                    $("#id").val(m.id);
+                    $("#status").val(m.status);
+                    $("#temp").val(m.temp);
+                    $("#morning").val(m.morning);
+                    $("#noon").val(m.noon);
+                    $("#evening").val(m.evening);
+                    $("#uId").val(m.uId);
+                    $("#oldUID").val(m.uId);
+                    $("#oldUID").html("原归属："+m.uId);
                 }
             })
         });
-        let emailZZ = /^[A-Za-z0-9-_\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
         $("#user_update").click(function () {
             var id = $("#id").val();
-            var bz = $.trim($("#bz").val());
-            var email = $.trim($("#email").val());
-            var pwd = $.trim($("#pwd").val());
-            var power = $.trim($("#power").val());
-            if(pwd===""||pwd.length===0||power===""||power.length===0){
-                layer.msg("注意：邮箱、密码、权限均不可为空！");
-                return ;
-            }
-            if (bz.length>50||pwd>20){
-                layer.msg("乖，备注不可超过50字，密码不可超过20字！");
-                return ;
-            }
-            if (!emailZZ.test(email)){
-                layer.msg("请输入有效邮箱！");
+            var status = $.trim($("#status").val());
+            var temp = $.trim($("#temp").val());
+            var name = $.trim($("#name").val());
+            var morning = $.trim($("#morning").val());
+            var noon = $.trim($("#noon").val());
+            var evening = $.trim($("#evening").val());
+            var uId = $.trim($("#uId").val());
+            if(name===""||name.length===0||name.length>15){
+                layer.msg("注意：名字不可为空！且不可超过15字");
                 return ;
             }
             const windowId = layer.load();
-            $.post("/admin/user", {
-                id:id,bz:bz,email:email,pwd:pwd,power:power
+            $.post("/admin/module", {
+                id:id,status:status,temp:temp,morning:morning,name:name,noon:noon,evening:evening,uId:uId
             }, function (data) {
                 layer.close(windowId);
                 layer.msg(data.result);

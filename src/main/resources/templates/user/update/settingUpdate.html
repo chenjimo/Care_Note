@@ -185,6 +185,7 @@
 <script src="../../../static/layer/layer.js"></script>
 <script type="text/javascript">
     $(function () {
+        var phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
         /*判断信息进行初始化处理*/
         $.post("/user/setting/get", null, function (message) {
             if (message.status === 200 || message.status === 201) {
@@ -216,6 +217,14 @@
             let val5 = $.trim($("#v6").val());
             if (val === "" || val.length === 0||val1===""||val1.length===0||val2 === "" || val2.length === 0||val3 === "" || val3.length === 0||val4 === "" || val4.length === 0||val5 === "" || val5.length === 0) {
                 layer.msg("亲，均不能为空啊！")
+                return;
+            }
+            if (!phoneReg.test(val2)){
+                layer.msg("请输入正确的手机号，不然您家小可爱收不到您的关怀！");
+                return;
+            }
+            if(val1.length>30||val2.length>30||val3.length>30||val4>30||val5>30){
+                layer.msg("模板信息可为空，但是不可超过30字啊！")
                 return;
             }
             let load = layer.load();

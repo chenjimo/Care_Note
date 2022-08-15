@@ -11,7 +11,9 @@ import jimo.care.care_note.info.user.UserSettingStatus;
 import jimo.care.care_note.service.impl.LogServiceImpl;
 import jimo.care.care_note.service.impl.ModuleServiceImpl;
 import jimo.care.care_note.service.impl.RelationServiceImpl;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -106,6 +108,9 @@ public class ModuleController {
             m.setMorning(autoF(m.getMorning()));
             m.setNoon(autoF(m.getNoon()));
             m.setEvening(autoF(m.getEvening()));
+            if (moduleService.getModule(m.getName())!=null){
+                return new Message(400, "创建失败，模板名字不允许重复，请重试！", null);
+            }
             boolean b = moduleService.insert(m);
             return new Message(b ? 200 : 500, b ? "创建成功！" : "创建失败，请重试！", null);
         } else {
@@ -115,6 +120,10 @@ public class ModuleController {
             m.setMorning(autoF(m.getMorning()));
             m.setNoon(autoF(m.getNoon()));
             m.setEvening(autoF(m.getEvening()));
+            CareModule module = moduleService.getModule(m.getName());
+            if (module!=null&&mID!=module.getId()){
+                return new Message(400, "修改失败，模板名字不允许重复，可恢复原来的名字，请重试！", null);
+            }
             boolean b = moduleService.updateById(m);
             return new Message(b ? 200 : 500, b ? "修改成功！" : "修改失败，请重试！", null);
         }

@@ -289,6 +289,10 @@
                 layer.msg("信息不能为空！！！");
                 return false;
             }
+            if (username.length>10||pwd.length>20){
+                layer.msg("乖，名字不可超过10字，密码不可超过20字！");
+                return ;
+            }
             if (!phoneReg.test(phone)) {
                 layer.msg("请输入有效的手机号码!");
                 return false;

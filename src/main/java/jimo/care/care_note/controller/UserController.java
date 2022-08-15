@@ -16,7 +16,6 @@ import jimo.care.care_note.service.impl.RelationServiceImpl;
 import jimo.care.care_note.service.impl.UserServiceImpl;
 import jimo.care.care_note.util.CodeUtils;
 import jimo.care.care_note.util.DateUtil;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -62,9 +61,9 @@ public class UserController {
         objectList.add(careUser.getName() + "\t-\t" + careUser.getPower() + "级用户");
         objectList.add(DateUtil.localDateTimeToString(careUser.getCreateTime()));
         objectList.add(careUser.getMoney());
-        objectList.add(logService.getCount(Wrappers.<Log>query().eq("u_id", careUser.getId())));
+        objectList.add(logService.getCount(Wrappers.<Log>query().eq("u_id", careUser.getId()).eq("date",LocalDateTime.now().minusDays(3))));
         List<Integer> finalList = new ArrayList<>();
-        moduleService.AdminGetModules(null, Wrappers.<CareModule>query().select("id").eq("u_id", 1)).getRecords()
+        moduleService.AdminGetModules(null, Wrappers.<CareModule>query().select("id").eq("u_id", careUser.getId())).getRecords()
                 .forEach(m -> finalList.add(m.getId()));
         objectList.add(finalList.size());
         objectList.add(finalList.size() == 0 ? 0 : logService.getCount(Wrappers.<Log>query().in("m_id", finalList)));

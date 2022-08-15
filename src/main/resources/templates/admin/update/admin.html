@@ -8,20 +8,20 @@
 </head>
 <style>
     .light {
-        font-size: 22px;
+        font-size: 20px;
         color: #fefefe;
         text-shadow: 0 0 0.5em #0ae642, 0 0 0.2em #5c5c5c;
     }
 </style>
 
 <body>
-<div id="app" class="light" style="text-align:center">
+<div id="app" class="light" style="text-align:center;">
     <div class="header">
         <span>修改管理员</span>
     </div>
 
-    <div class="content" style="text-align:center">
-        <table style="text-align:center">
+    <div class="content" >
+        <table >
             <tr>
                 <td class="text-right">邮箱</td>
                 <td class="content_right"><input class="input inline-input" id="userEmail" placeholder="请输入Email"> <span
@@ -32,13 +32,13 @@
     <div class="header">
         <span>查找信息如下</span>
     </div>
-    <div class="content" style="text-align:center">
+    <div class="content" >
         <table>
             <tr>
                 <td class="text-right">该用户信息</td>
                 <td class="content_right"><label>
-                    <input type="hidden" class="input" id="name">
-                    <input type="hidden" class="input" id="id">
+                    <input disabled="disabled" class="input" id="name">
+                    <input readOnly="readOnly" class="input" id="id">
                 </label></td>
             </tr>
             <tr>
@@ -67,6 +67,7 @@
                         <option value="5">中级管理员</option>
                         <option value="6">高级管理员</option>
                         <option value="2">2-级用户</option>
+                        <option value="1">1-级用户</option>
                         <option value="3">接受提醒用户</option>
                         <option value="0">停用</option>
                         <option value="-1">删除</option>
@@ -124,6 +125,10 @@
             if (pwd === "" || pwd.length === 0 || power === "" || power.length === 0) {
                 layer.msg("注意：邮箱、密码、权限均不可为空！");
                 return;
+            }
+            if (bz.length>50||pwd>20){
+                layer.msg("乖，备注不可超过50字，密码不可超过20字！");
+                return ;
             }
             if (!emailZZ.test(email)) {
                 layer.msg("请输入有效邮箱！");

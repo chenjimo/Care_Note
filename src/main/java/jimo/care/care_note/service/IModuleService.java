@@ -2,8 +2,8 @@ package jimo.care.care_note.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import jimo.care.care_note.bean.CareModule;
 import com.baomidou.mybatisplus.extension.service.IService;
+import jimo.care.care_note.bean.CareModule;
 
 /**
  * <p>
@@ -74,4 +74,8 @@ public interface IModuleService extends IService<CareModule> {
      * @return 数量
      */
     Integer getModuleCount(QueryWrapper queryWrapper);
+    /***
+     * 由名字获取Module
+     */
+    CareModule getModule(String name);
 }

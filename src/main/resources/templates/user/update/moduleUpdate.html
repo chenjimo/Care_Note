@@ -132,7 +132,7 @@
                     <div class="inputTypeCont">
                         <div class="inputTitle">名字</div>
                         <label for="v1"></label><input type="text" id="v1" class="commonInputFunc"
-                                                       name="expressId" placeholder="请输入模板名字，不可为空！">
+                                                       name="expressId" placeholder="请输入模板名字，不可为空且不可重复！！！">
                     </div>
                     <div class="inputTypeCont">
                         <div class="inputTitle">天气</div>
@@ -207,8 +207,12 @@
             let val4 = $.trim($("#v5").val());
             let val5 = $.trim($("#v6").val());
             let val6 = $.trim($("#v7").val());
-            if (val === "" || val.length === 0) {
-                layer.msg("名字坚决不能为空啊！")
+            if (val === "" || val.length === 0||val.length>15) {
+                layer.msg("名字坚决不能为空，且不可超过十五字啊！")
+                return;
+            }
+            if(val1.length>34||val2.length>34||val3.length>34||val4>34||val5>34){
+                layer.msg("模板信息可为空，但是不可超过34字啊！")
                 return;
             }
             let load = layer.load();

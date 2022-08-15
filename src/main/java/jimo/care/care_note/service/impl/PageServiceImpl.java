@@ -1,7 +1,6 @@
 package jimo.care.care_note.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jimo.care.care_note.bean.Page;
@@ -93,5 +92,14 @@ public class PageServiceImpl extends ServiceImpl<PageMapper, Page> implements IP
             AddVisit(page.getId());
         }
         return page.getPageUrl();
+    }
+
+    /***
+     * 由Url进行获取全部信息
+     * @param url
+     */
+    @Override
+    public Page getPageByUrl(String url) {
+        return baseMapper.selectOne(Wrappers.<Page>query().eq("url",url));
     }
 }

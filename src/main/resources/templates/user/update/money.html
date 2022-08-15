@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:font-size="http://www.w3.org/1999/xhtml" xmlns:linear-gradient>
+<html xmlns:linear-gradient>
 <head>
     <title>CareNOte-Money</title>
     <meta charset="utf-8">
@@ -258,7 +258,12 @@
         var msg = $.trim($("#msg").val());
         var chong = $.trim($("#chong").val());
         if (msg===""||msg.length===0||chong===""||chong.length===0){
-            layer.msg("感谢您的支持，但信息不能为空！")
+            layer.msg("感谢您的支持，但信息不能为空！");
+            return;
+        }
+        if (msg.length>100){
+            layer.msg("感谢您的支持，但留言不可超过100字！")
+            return;
         }
         curCount1 = count;
         $("#btnSendCode1").attr("disabled", "true");

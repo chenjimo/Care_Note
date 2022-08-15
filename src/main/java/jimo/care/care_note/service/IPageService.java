@@ -57,4 +57,8 @@ public interface IPageService extends IService<Page> {
      * @return 获取本地地址
      */
      String getPageUrl(String url,boolean add);
+    /***
+     * 由Url进行获取全部信息
+     */
+    Page getPageByUrl(String url);
 }
