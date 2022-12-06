@@ -29,11 +29,11 @@ public class GenerateTableUtil {
         mpg.setGlobalConfig(gc);
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://jimo.fun:3306/care_note?serverTimezone=UTC");
+        dsc.setUrl("jdbc:mysql://mysql:3306/care_note?serverTimezone=UTC");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("care_note_jimo");
-        dsc.setPassword("care_note_jimo123456");
+        dsc.setUsername("root");
+        dsc.setPassword("123456");
         mpg.setDataSource(dsc);
 
         // 包配置
